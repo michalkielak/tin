@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+  <title></title>
+</head>
+<body>
+<a href="index.html">back to the ToC</a>
+<h1><a class="mozTocH2" name="mozTocId940296"></a>The concept of
+"External Applications"</h1>
+<br>
+<ol id="mozToc">
+<!--mozToc h1 1 h2 2 h3 3 h4 4 h5 5 h6 6-->
+  <li><a href="#mozTocId940296">The concept of "External Applications"</a>
+    <ol>
+      <li><a href="#mozTocId577264">The SDP-Description </a></li>
+      <li><a href="#mozTocId850405">Preparing the SDP-Parameters:
+Initialization by Session Table and
+VectorID</a></li>
+      <li><a href="#mozTocId347678">The Application</a></li>
+    </ol>
+  </li>
+</ol>
+<br>
+KPhone SI uses the concept "External Application" to start applications
+for communication on both ends of the call. A good example is KPhoneIM,
+a simple point-to-point IM application,
+other examples are the MICE tools of the project MBONE such as vic and
+wbd (whiteboard). Those applications are triggered by an INVITE
+transaction with a specfic SDP-description, as describee below. KPhone
+SI itself supports STUN for NAT traversal. It may be used for all
+media tools. External Applications may make use of it, if they support
+symmetric signalling. KPhoneIM does this and so may
+serve as an example for further apps. The MICE tools, originally
+designed for multicast do not, but is is possible to adapt
+them.
+<h2><a class="mozTocH3" name="mozTocId577264"></a>The SDP-Description </h2>
+RFC 2327 proposes the type m=application, for non audio and non video
+sessions. The parameter format must be defined per case. Thus we define
+the format for generalized sessions: <br>
+<b><i>m=application &lt;port&gt; &lt;transport&gt; &lt;fmt&gt;</i></b><br>
+transport may be UDP or RTP/AVP<br>
+fmt is set to the session's "VectorId". We use imp2p for point to point
+IM.<br>
+To denote applications "remote startable the tag
+<br>
+<b><i> a=fmtp:&lt;fmt&gt; rstart</i></b>
+<br>
+is added.
+<h2><a class="mozTocH3" name="mozTocId850405"></a>Preparing the
+SDP-Parameters: Initialization by Session Table and
+VectorID</h2>
+The KPhone SI has four entries for external sessions. It is up to
+the
+user to initialize them. The Vector-ID defines the session type. Only
+if both peers use the same,
+the session will be accepted, otherwise the call is rejected.<br>
+<br>
+Per session template the following information can by specified by
+configuration:
+<ul>
+  <li>The executable </li>
+  <li>The command line </li>
+  <li>The sessions icon to be shown in the main panel </li>
+  <li>The control button for remote start </li>
+  <li>The VectorId </li>
+  <li>The button field for Hold Allowed </li>
+  <li>The button field for Transfer Allowed </li>
+  <li>Use Sound Card (to prevent the start of other calls of that
+type) </li>
+  <li>The button field for SDP Transport (entries UDP and RTP)</li>
+</ul>
+You find a more detailed explanation about the configuration of a
+external application in the chapter <a href="usermanual3.html#ct">How
+to configure the phone</a><br>
+<h2><a class="mozTocH3" name="mozTocId347678"></a>The Application</h2>
+Between KPhone SI and the application no communication is
+implemented.
+Therefore all information, the application needs, <b>must</b> be
+transfered in the
+commandline. To support this KPhone SI offers a set of variables, which
+may be used to&nbsp; compose the command line.
+They are substituted by the phone:<br>
+&nbsp;<br>
+<b>%A</b> IP address of the peer <br>
+<b>%P</b> media port of the peer <br>
+<b>%O</b> own media port <br>
+<b>%I</b> direction flag equals to <b>o</b> for an outgoing to <b>i </b>for
+an incoming call
+<br>
+<b>%T</b> selected transport media ,0 = UDP, 1 = RTP/AVP <br>
+<b>%D</b> the Call-ID <br>
+<b>%M</b> the own URI <br>
+<b>%C</b> the partner URI <br>
+<b>%L </b>the own IP-address <br>
+<b>%R</b> the referto-URI
+<br>
+<br>
+<a href="index.html">back to the ToC</a><br>
+</body>
+</html>

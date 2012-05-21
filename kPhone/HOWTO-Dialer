@@ -1,0 +1,28 @@
+The Dialer is a little remote dial command line application,
+start it with 
+   kpsidial URI
+or 
+   kpsidial type URI
+   
+URI is your sip phonenumber with or without domain part
+
+type is a one char string:
+a  audio
+v  audio+video
+o  video only
+1  first external session type
+2  second external session type
+3  third external session type
+4  fourth external session type
+For URI and the sessiontypes an how to handle them, see the user manual
+
+The dialer is initially inactive, you activate it from 
+ Preferences->SipPreferences->Settings->Remote Dialer.
+It is necessary to restart kphone after the change.
+ 
+If the kphone broke, dialer's socket should be cleared by hand:
+    rm /tmp/kpsidg
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!IMPORTANT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+The dialer is experimental software, don't curse the kphone team, if it will
+not operate perfectly on your PC! Report your experience!

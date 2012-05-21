@@ -1,0 +1,162 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+  <meta http-equiv="CONTENT-TYPE" content="text/html; charset=utf-8">
+  <title>Provisioning of the Providers</title>
+  <style type="text">
+	<!--
+		@page { size: 21cm 29.7cm; margin-left: 2cm; margin-right: 2cm; margin-top: 0.8cm; margin-bottom: 0.8cm }
+		TD P.cjk { font-weight: medium }
+		TD P.ctl { font-weight: medium }
+		H1.western { font-family: "Nimbus Sans L" }
+		P.cjk { font-weight: medium }
+		P.ctl { font-weight: medium }
+	-->
+	</style>
+</head>
+<body dir="ltr" lang="en-US">
+<a href="index.html">back to the ToC</a>
+<h1 class="western" style="page-break-before: always;"><a
+ class="mozTocH1" name="mozTocId723297"></a>KPhoneIS User
+Manual: The Dialer</h1>
+<br>
+<ol id="mozToc">
+<!--mozToc h1 1 h2 2 h3 3 h4 4 h5 5 h6 6-->
+  <li><a href="#mozTocId723297">KPhoneIS User
+Manual: The Dialer</a>
+    <ol>
+      <li><a href="#mozTocId409915">Activation
+        </a></li>
+      <li><a href="#mozTocId592510">If the dialer fails</a></li>
+      <li><a href="#mozTocId391762">Dialer and Mozdev</a>
+        <ol>
+          <li><a href="#mozTocId986023">Seamonkey</a></li>
+          <li><a href="#mozTocId599892">Firefox</a></li>
+        </ol>
+      </li>
+    </ol>
+  </li>
+</ol>
+<br>
+<br>
+The Dialer is a little remote dial command line application, start it
+with <br>
+&nbsp;<span style="font-weight: bold; font-style: italic;">&nbsp;
+kpsidial URI</span><br>
+or <br>
+&nbsp;&nbsp; <span style="font-style: italic; font-weight: bold;">kpsidial
+type URI</span><br>
+&nbsp;&nbsp; <br>
+<span style="font-weight: bold;">URI</span> is your sip phonenumber
+with or without domain part <br>
+<span style="font-weight: bold;">type</span> is a one char string:<br>
+<br>
+<table style="width: 466px; text-align: left; height: 207px;" border="1"
+ cellpadding="2" cellspacing="2">
+  <tbody>
+    <tr>
+      <td style="vertical-align: top; font-weight: bold;">type<br>
+      </td>
+      <td style="vertical-align: top; font-weight: bold;">meaning<br>
+      </td>
+    </tr>
+    <tr>
+      <td>a</td>
+      <td> audio</td>
+    </tr>
+    <tr>
+      <td>v</td>
+      <td> audio+video</td>
+    </tr>
+    <tr>
+      <td>o</td>
+      <td> video only</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td> first external session type</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td> second external session type</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td> third external session type</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td> fourth external session type</td>
+    </tr>
+  </tbody>
+</table>
+<br>
+<br>
+For URI and the sessiontypes and how to handle them, see "KPhoneIS
+User Manual:&nbsp;
+How to Call"<br>
+<h2><a class="mozTocH2" name="mozTocId409915"></a>Activation<br>
+</h2>
+The dialer is initially inactive. You activate it from <br>
+<br>
+&nbsp;<span style="font-style: italic; font-weight: bold;">Preferences-&gt;SipPreferences-&gt;Settings-&gt;Remote
+Dialer.<br>
+<br>
+</span>It is necessary to restart kphone after the change.<br>
+&nbsp;
+<br>
+<h2><a class="mozTocH2" name="mozTocId592510"></a>If the dialer fails</h2>
+clear the dialer's socket&nbsp; by hand:<br>
+<br>
+&nbsp;<span style="font-weight: bold;">&nbsp;&nbsp; rm /tmp/kpsidg</span><br>
+<br>
+<h2><a class="mozTocH2" name="mozTocId391762"></a>Dialer and Mozdev</h2>
+<h3><a class="mozTocH3" name="mozTocId986023"></a><span
+ style="font-weight: bold; color: rgb(255, 0, 0);"></span><span
+ style="font-weight: bold; color: rgb(255, 0, 0);"></span>Seamonkey</h3>
+<br>
+mozdev is an
+extension of Firefox and Seamonkey. Among other capabilities, it
+integrades external tools <br>
+into the browser allowing them to handle links. Although "sip" is no
+recognized link type yet, mozdev may be <br>
+used utilizing the "universal handler" for it.<br>
+<br>
+In your Seamonkey go to <span
+ style="font-weight: bold; font-style: italic;">Preferences-&gt;modzdev
+</span>and <br>
+set below "<span style="font-weight: bold; font-style: italic;">Universal
+Handler</span>" the "<span
+ style="font-weight: bold; font-style: italic;">Scheme</span>" to <span
+ style="font-weight: bold;">sip</span> and&nbsp; "<span
+ style="font-weight: bold; font-style: italic;">Command</span>" to<span
+ style="font-weight: bold;"> /usr/local/bin/kpsidial</span>. The path
+to kpsidial <br>
+may be different on your box.<br>
+<br>
+<img style="width: 702px; height: 575px;" alt="mozex in seamonkey"
+ src="mozex.png"><br>
+<br>
+Go back to &nbsp;
+<a href="usermanual11.html#mozTocId723297">KPhoneIS User
+Manual: The Dialer</a><br>
+<h3><a class="mozTocH3" name="mozTocId599892"></a>Firefox</h3>
+In your Firefox go to <span
+ style="font-weight: bold; font-style: italic;">Extras-&gt;Add-ons</span>.
+In the line <span style="font-weight: bold; font-style: italic;">Mozexx</span>
+press <span style="font-weight: bold; font-style: italic;">Preferences</span>
+. A new window will pop up,<br>
+where you should fill <span style="font-weight: bold;">sip</span> as
+protocol and select <span style="font-weight: bold;">kpsidial </span>as
+Command.<br>
+<br>
+<img style="width: 725px; height: 329px;" alt="mozex for firefox"
+ src="mozex-ff.png"><br>
+<br>
+<br>
+&nbsp;Go back to &nbsp;
+<a href="usermanual11.html#mozTocId723297">KPhoneIS User
+Manual: The Dialer</a><br>
+<p class="western"><a href="index.html">back to the ToC</a></p>
+</body>
+</html>

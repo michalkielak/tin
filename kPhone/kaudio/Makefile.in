@@ -1,0 +1,48 @@
+CXX=@CXX@
+MOC=@MOC@
+
+AFLAGS=-g
+CFLAGS=@CFLAGS@ -I. -I.. @DEFS@
+CXXFLAGS=$(CFLAGS)
+
+LIBS=@LIBS@
+AUDIO=@AUDIO_MOC@
+ALSA=@ALSA@
+
+OBJS=\
+	$(AUDIO) \
+	$(ALSA) \
+	g711.o\
+	dspoutalsa.o\
+	dspouttone.o\
+	audiobuffer.o\
+	dspout.o\
+	dspoutoss.o\
+	dspoutrtp.o\
+	dspearly.o dspearly.moc.o\
+	dspaudio.o\
+	dspaudioin.o dspaudioout.o\
+	dtmfgenerator.o
+
+all:	kaudio.a
+
+.cpp.o:
+	$(CXX) $(CXXFLAGS) -c -o $@ $<
+
+%.moc.cpp: %.h
+	$(MOC) -o $@ $<
+
+clean:
+	rm -f *.o *.a *~ *.moc.cpp *.bak
+
+distclean:	clean
+	rm -f Makefile
+
+dep:
+	makedepend -- $(CXXFLAGS) *.cpp
+
+kaudio.a: $(OBJS)
+	ar rcs $@ $(OBJS)
+
+
+

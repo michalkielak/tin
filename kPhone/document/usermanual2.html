@@ -1,0 +1,70 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+  <meta http-equiv="CONTENT-TYPE" content="text/html; charset=utf-8">
+  <title>The Commandline</title>
+  <meta name="GENERATOR" content="OpenOffice.org 1.1.1  (Linux)">
+  <meta name="CREATED" content="20051015;8391100">
+  <meta name="CHANGED" content="20051015;8432000">
+  <style type="text"> </style>
+</head>
+<body dir="ltr" lang="en-US">
+<div style="color: rgb(255, 0, 0);">
+<div id="Bereich1" dir="ltr"><a href="index.html">back to the ToC</a>
+</div>
+</div>
+<h1 class="western" style="page-break-before: always;">KPhoneIS
+User Manual: The Commandline</h1>
+<p class="western">To get help, write <b>kpsi -h</b></p>
+<p class="western" style=""><i>kfl@papa:~&gt; kpsi
+-h</i></p>
+<br>
+kpsi [-u &lt;user&gt;] [-a &lt;host&gt;] [-p &lt;port&gt;[:n]] [-t]
+[-r] [-n]&nbsp; <br>
+<br style="font-weight: bold;">
+<span style="font-weight: bold;">Options</span><br>
+<br>
+<br>
+<span style="font-weight: bold;">-u </span>&lt;user&gt; user
+identification in database<br>
+&nbsp;&lt;user&gt; is not the user part of the SIP-URI (SIP-Phone
+number), but the user's ID in the database ($HOME/.qt/kphonesirc) <br>
+<br>
+<span style="font-weight: bold;">-a </span>&lt;host&gt; dissipate-host<br>
+&nbsp;&lt;host&gt; the IP address of the interface used by the phone
+(i.e. your computer's address). If this parameter is not set, KPhoneSI
+scans the interface table. Th user is ask to make the choice. <br>
+<span style="font-weight: bold;"><br>
+-p</span> &lt;port&gt;[:n] port number you listen on<br>
+&nbsp;&lt;port&gt; The listen-to port. It is used to address the UA
+from outside. Your value is stored in the settings. The value 0 resets
+the port to 5060, what is also the default, if the setting is not set.
+If your value is in use KPhoneSI finds a new one greater then your
+value. If the port of your choice is used, n gives the allowed numbers
+of retrys to find a new port. The value 0 allows only your port. <br>
+<span style="font-weight: bold;"><br>
+-l</span> loose route<br>
+&nbsp;<br>
+<span style="font-weight: bold;">-s</span> strict route<br>
+&nbsp;<br>
+<span style="font-weight: bold;">-r</span> send requests to the To-URI
+directly<br>
+&nbsp;<br>
+<span style="font-weight: bold;">-t &lt;nr&gt;&nbsp;</span> UA point to
+point <br>
+&nbsp;IPv4: 4 and IPv6: 6 are legal values In this case the
+dissipate-host equals the host part of sip URI of the UA). -t is one
+possible method to start point to point sessions without involving a
+proxy. The registration is switched off and the SIP-URI takes the form
+sip:port@dissipate-host:port. <br>
+<span style="font-weight: bold;"><br>
+-n </span>do NOT register after startup <br>
+&nbsp;Usefull if you want to configure the phone and to avoid startup
+with unknown parameters <br>
+&nbsp;<br>
+<span style="font-weight: bold;">-v n&nbsp;</span> n=1 SIP
+messages&nbsp; n=2 debug info n=3 both<br>
+<br>
+<p class="western"><a href="index.html">back to the ToC</a></p>
+</body>
+</html>

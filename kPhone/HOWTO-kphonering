@@ -1,0 +1,34 @@
+We have two external ringing devices:
+ - kphoneringsh
+ - kphonering
+
+
+kphoneringsh
+============
+
+This shell script accepts two arguments:
+
+- the ALSA audio device as default or hw:x,y (x ist device number, y the subdevice number,
+  hw:0,0 - o.k. if you have one card - is preselcted )
+- the file to be played
+
+It uses alsaplay to play the tunes. It can be adapted easily to be used
+with an other app than alsaplay (see handbook)
+
+
+kphonering
+============
+
+kphonering accepts two arguments:
+
+- the file to be played
+- the OSS audio device (i.e. /dev/dsp)
+
+Depending on these it plays
+
+- beeps if there are no arguments or the first argument is default
+- music if a wav-file is the first argument
+
+The sound device defaults to /dev/dsp
+
+The files are repeated with a short break of 1 sec

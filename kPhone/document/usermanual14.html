@@ -1,0 +1,304 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+  <meta http-equiv="CONTENT-TYPE" content="text/html; charset=utf-8">
+  <title>Install</title>
+  <meta name="GENERATOR" content="OpenOffice.org 2.0  (Linux)">
+  <meta name="CREATED" content="20070120;7104900">
+  <meta name="CHANGED" content="16010101;0">
+</head>
+<body>
+<a href="index.html">back to the ToC</a>
+<h1><a class="mozTocH1" name="mozTocId243797"></a>KPhoneIS User Manual:
+How to build and install</h1>
+<big><span style="font-weight: bold;">Table of Contents<br>
+<br>
+</span></big>
+<ol id="mozToc">
+<!--mozToc h1 1 h2 2 h3 3 h4 4 h5 5 h6 6-->
+  <li><a href="#mozTocId243797">KPhoneIS User Manual: How to build and
+install</a>
+    <ol>
+      <li><a href="#mozTocId164692">Foreword: About installation</a></li>
+      <li><a href="#mozTocId296764">The simplest way to compile this
+package</a></li>
+      <li><a href="#mozTocId617619">How to use KPhoneSI with SRTP
+extension:</a>
+        <ol>
+          <li><a href="#mozTocId548232">Normal operation (libsrtp
+1.4.2, 1.4.1</a></li>
+          <li><a href="#mozTocId68774">If you plan to use libsrtp 1.4.0
+instead:</a></li>
+        </ol>
+      </li>
+      <li><a href="#mozTocId290231">Using SPEEX</a></li>
+      <li><a href="#mozTocId90305">Internationalisation</a></li>
+      <li><a href="#mozTocId287370">Compile and Install Options
+        </a>
+        <ol>
+          <li><a href="#mozTocId544101">Compilers and Options</a></li>
+          <li><a href="#mozTocId886854">Compiling For Multiple
+Architectures</a></li>
+          <li><a href="#mozTocId800946">Installation Names</a></li>
+          <li><a href="#mozTocId333181">Optional Features</a></li>
+          <li><a href="#mozTocId268277">Specifying the System Type</a></li>
+          <li><a href="#mozTocId74521">Sharing Defaults</a></li>
+        </ol>
+      </li>
+      <li><a href="#mozTocId104236">configure: Operation Controls</a></li>
+    </ol>
+  </li>
+</ol>
+<br>
+<h2><a class="mozTocH2" name="mozTocId164692"></a><a name="H21"></a>Foreword:
+About installation</h2>
+<p>The file `configure.in' is used to create `configure' by a program
+called `autoconf'. You only need `configure.in' if you want to
+change<br>
+it or regenerate `configure' using a newer version of
+`autoconf'.It is a good practice NOT to change 'configure' by hand,
+but to change `configure.in' instead and let `autoconf' d the
+rest.<br>
+<br>
+The `configure' shell script attempts to guess correct
+values for various system-dependent variables used during
+compilation. It uses<br>
+those values to create a `Makefile' in each
+directory of the package. It may also create one or more `.h' files
+containing system-dependent definitions. Finally, it creates a shell
+script `config.status' that you can run in the future to recreate the
+current configuration, a file 'config.cache' that saves the results
+of its tests to speed up&nbsp; reconfiguring, and a file `config.log'
+containing compiler output (useful mainly for debugging
+`configure').<br>
+<br>
+If you need to do unusual things to compile the
+package, please try to figure out how `configure' could check whether
+to do them, and mail diffs or instructions to the address given in
+the `README' so they can be considered for the next release. If at
+some point `config.cache' contains results you don't want to keep,
+you may remove or edit it.</p>
+<h2><a class="mozTocH2" name="mozTocId296764"></a><a name="H22"></a>The
+simplest way to compile this package</h2>
+<p>Assume, you have got the source package and you have 'cd'ed to
+the&nbsp; source dirctory kphoneSI. The Author recommends
+/usr/local/src as&nbsp; a good place for kphoneSI. Feel free to set
+the permissions to your&nbsp; account (something like kfl:users)</p>
+<ol>
+  <li>
+    <p style="margin-bottom: 0cm;">Run 'autoconf', this tool generates
+the 'configure' script. </p>
+  </li>
+  <li>
+    <p style="margin-bottom: 0cm;">Run `./configure &lt;parameters&gt;'
+to configure the package for your system.If you are using `csh' on an
+old version of System V, you might need to type`sh ./configure' instead
+to prevent `csh' from trying to execute`configure' itself. Running
+`configure' takes a while. While running, it prints somemessages
+telling which features it is checking for.The Author recommends to call
+configure with the parameters:/configure --enable-threads=yes
+--enable-alsa=yes --enable-debug=yesPlease check the configure.h
+afterwars! '#' is possibly missing there! </p>
+  </li>
+  <li>
+    <p style="margin-bottom: 0cm;">Some distributions put the utility
+'lrelease' into a directory outside the PATH Check this, you possibly
+have either adapt your PATH or set a symlink3..Type `make' to compile
+the package. </p>
+  </li>
+  <li>
+    <p style="margin-bottom: 0cm;">&nbsp;Type `make install' to install
+the programs and any data files and&nbsp; documentation. CAVE!!!! you
+must be root to do this! </p>
+  </li>
+  <li>
+    <p style="margin-bottom: 0cm;">You can remove the program binaries
+and object files from the source code directory by typing `make clean'.
+To also remove the files that `configure' created (so you can compile
+the package for a different kind of computer), type `make distclean'. </p>
+  </li>
+  <li>
+    <p>To install VIC (Videoconferencing Tool) you must first
+downloadkphone-vic source code package from the CVS. Then type 'sh
+vic-compile.sh'to compile VIC and 'sh vic-install.sh' to install VIC.
+IMPORTANT: The kphone-vic is not yet adapted to compiler versions
+greaterthen g++ 3.5 and will NOT compile with g++ 4.x ! </p>
+  </li>
+</ol>
+<h2><a class="mozTocH2" name="mozTocId617619"></a><a name="H23"></a>How
+to use KPhoneSI with SRTP extension:</h2>
+<h3><a class="mozTocH3" name="mozTocId548232"></a>Normal operation
+(libsrtp 1.4.2, 1.4.1</h3>
+<ol>
+  <li>
+    <p style="margin-bottom: 0cm;">Download the libsrtp library version
+1.4.2 (1.4.1 works too) &lt;br&gt; (Link:
+http://srtp.sourceforge.net/srtp.html) </p>
+  </li>
+  <li>
+    <p style="margin-bottom: 0cm;">Build the libsrtp </p>
+  </li>
+  <li>
+    <p style="margin-bottom: 0cm;">Install libsrtp </p>
+  </li>
+  <li>
+    <p>./configure --enable-srtp &amp;&amp; make </p>
+  </li>
+</ol>
+<h3><a class="mozTocH3" name="mozTocId68774"></a>If you plan to use
+libsrtp 1.4.0 instead:</h3>
+<ol>
+  <li>
+    <p style="margin-bottom: 0cm;">Download the libsrtp library version
+1.4.0&nbsp; &lt;br&gt; (Link: http://srtp.sourceforge.net/srtp.html) </p>
+  </li>
+  <li>
+    <p style="margin-bottom: 0cm;">&nbsp;Build the libsrtp </p>
+  </li>
+  <li>
+    <p style="margin-bottom: 0cm;">&nbsp;Copy the library (libsrtp.a)
+to /usr/local/lib&nbsp; and the libsrtp header-files (include/*.h and
+crypto/include/*.h) into /usr/local/include/srtp yourself </p>
+  </li>
+  <li>
+    <p style="margin-bottom: 0cm;">Rename the subdirectory srtp-save </p>
+  </li>
+  <li>
+    <p>./configure --enable-srtp &amp;&amp; make </p>
+  </li>
+</ol>
+<p>Use KPhoneSI with encryption</p>
+<h2><a class="mozTocH2" name="mozTocId290231"></a><a name="H24"></a>Using
+SPEEX</h2>
+<p>Speex is based on the speex 1.0.5 library. It is compiled into
+KPhone SI by default. If you do not want this, use the configure
+command line parameter&nbsp; --enable-speex=no<br>
+</p>
+<h2><a class="mozTocH2" name="mozTocId90305"></a><a name="H25">Internationalisation</a></h2>
+<p>If you want it, you should use the configure command line
+with the parameter
+--enable-lipo=yes<br>
+kphone_nolang.ts allows to add more languages:<br>
+copy it to a language of your choice and add the translations in the
+&lt;translation&gt;&lt;/translation&gt; brackets.</p>
+<h2><a class="mozTocH2" name="mozTocId287370"></a><a name="H26"></a>Compile
+and Install Options<br>
+</h2>
+<h3><a class="mozTocH3" name="mozTocId544101"></a>Compilers and Options</h3>
+<p>Some systems require unusual options for compilation or linking
+that the `configure' script does not know about. You can give
+`configure' initial values for variables by setting them in the
+environment. Using a Bourne-compatible shell, you can do that on the
+command line like this:<br>
+CC=c89 CFLAGS=-O2 LIBS=-lposix
+./configure<br>
+Or on systems that have the `env' program, you can do
+it like this: <br>
+env CPPFLAGS=-I/usr/local/include LDFLAGS=-s
+./configure</p>
+<h3><a class="mozTocH3" name="mozTocId886854"></a>Compiling For
+Multiple Architectures</h3>
+<p>You can compile the package for more than one kind of computer at
+the same time, by placing the object files for each architecture in
+their own directory. To do this, you must use a version of `make'
+that supports the `VPATH' variable, such as GNU `make'. `cd' to the
+directory where you want the object files and executables to go and
+run the `configure' script. `configure' automatically checks for the
+source code in the directory that `configure' is in and in `..'.<br>
+<br>
+If
+you have to use a `make' that does not supports the `VPATH' variable,
+you have to compile the package for one architecture at a time in the
+source code directory. After you have installed the package for one
+architecture, use `make distclean' before reconfiguring for another
+architecture.</p>
+<h3><a class="mozTocH3" name="mozTocId800946"></a>Installation Names</h3>
+<p>By default, `make install' will install the package's files in
+`/usr/local/bin `/usr/local/lib', etc. You can specify
+an<br>
+installation prefix other than `/usr/local' by giving
+`configure' the option `--prefix=PATH'.</p>
+<h3><a class="mozTocH3" name="mozTocId333181"></a>Optional Features</h3>
+<p>Some packages pay attention to `--enable-FEATURE' options to
+`configure', where FEATURE indicates an optional part of the package.
+They may also pay attention to `--with-PACKAGE' options, where
+PACKAGE is something like `gnu-as' or `x' (for the X Window System).
+The `README' should mention any `--enable-' and `--with-' options
+that the<br>
+package recognizes.<br>
+For packages that use the X Window
+System, `configure' can usually&nbsp; find the X include and library
+files automatically, but if it doesn't, you can use the `configure'
+options `--x-includes=DIR' and `--x-libraries=DIR' to specify their
+locations.</p>
+<h3><a class="mozTocH3" name="mozTocId268277"></a>Specifying the System
+Type</h3>
+<p>There may be some features `configure' can not figure out
+automatically, but needs to determine by the type of host the
+package<br>
+will run on. Usually `configure' can figure that out, but
+if it prints a message saying it can not guess the host type, give it
+the<br>
+`--host=TYPE' option. TYPE can either be a short name for the
+system type, such as `sun4', or a canonical name with three
+fields:<br>
+CPU-COMPANY-SYSTEM<br>
+See the file `config.sub' for the
+possible values of each field. If `config.sub' isn't included in this
+package, then this package doesn't<br>
+need to know the host type. <br>
+If
+you are building compiler tools for cross-compiling, you can also use
+the `--target=TYPE' option to select the type of system they will
+produce code for and the `--build=TYPE' option to select the type of
+system on which you are compiling the package.</p>
+<h3><a class="mozTocH3" name="mozTocId74521"></a>Sharing Defaults</h3>
+<p>If you want to set default values for `configure' scripts to
+share, you can create a site shell script called `config.site' that
+gives<br>
+default values for variables like `CC', `cache_file', and
+`prefix'. `configure' looks for `PREFIX/share/config.site' if it
+exists, then<br>
+`PREFIX/etc/config.site' if it exists. Or, you can
+set the `CONFIG_SITE' environment variable to the location of the
+site script.<br>
+A warning: not all `configure' scripts look for a
+site script.</p>
+<h2><a class="mozTocH2" name="mozTocId104236"></a><a name="H27"></a>configure:
+Operation Controls</h2>
+<p>`configure' recognizes the following options to control how it
+operates.<br>
+<br>
+<b><i>`--cache-file=FILE'</i></b><br>
+Use and save
+the results of the tests in FILE instead of `./config.cache'. Set
+FILE to `/dev/null' to disable caching, for<br>
+debugging
+`configure'.<br>
+<br>
+<b><i>`--help'</i></b><br>
+Print a summary of the
+options to `configure', and exit.<br>
+<br>
+<b><i>`--quiet'</i></b><br>
+<b><i>`--silent'</i></b><br>
+<b><i>`-q'</i></b><br>
+Do
+not print messages saying which checks are being
+made.<br>
+<br>
+<b><i>`--srcdir=DIR'</i></b><br>
+Look for the package's
+source code in directory DIR. Usually `configure' can determine that
+directory automatically.<br>
+<br>
+<b><i>`--version'</i></b><br>
+Print
+the version of Autoconf used to generate the `configure ' script, and
+exit.<br>
+<br>
+`configure' also accepts some other, not widely useful,
+options. </p>
+<a href="index.html">back to the ToC</a>
+</body>
+</html>

@@ -1,0 +1,51 @@
+ifeq (@ENABLE_SRTP@,yes)
+SR=srtp
+endif
+
+ifeq (@ENABLE_LIPO@,yes)
+SL=po
+endif
+
+ifeq (@ENABLE_SPEEX@,yes)
+SE=Speex
+endif
+
+SUBDIRS=$(SL) dissipate2 gsm ilbc $(SE) $(SR) ringing kdial kaudio kphone
+
+SUBS	:=$(foreach sub,$(SUBDIRS), $(sub)/$(sub).a)
+
+all dep:
+	@set -e; for T in $(SUBDIRS); do make -C $$T $@; done
+#	@for T in $(SUBDIRS); do make -C $$T $@; done
+
+install:	all
+ifeq (@ENABLE_LIPO@,yes)
+	make -C po install
+endif
+	make -C icons install
+	make -C kphone install
+	make -C kdial install
+	make -C ringing install
+
+uninstall:
+ifeq (@ENABLE_LIPO@,yes)
+	make -C po uninstall
+endif
+	make -C kphone uninstall
+	make -C ringing uninstall
+	make -C kdial uninstall
+	make -C icons uninstall
+
+clean:
+	@for T in $(SUBDIRS); do make -C $$T $@; done
+
+distclean:	clean
+	rm -f config.cache config.log config.status
+	rm -f Makefile
+	rm -f config.h configure 
+	@for T in $(SUBDIRS); do make -C $$T $@; done
+ifeq (@ENABLE_LIPO@,yes)
+	rm -f po/Makefile
+endif
+	rm -f icons/Makefile
+	rm -rf autom4te.cache

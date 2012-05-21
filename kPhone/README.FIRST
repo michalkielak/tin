@@ -1,0 +1,37 @@
+0. Before compiling, please read INSTALL !!!
+
+1. The source comes with two srtp subdirectories. 
+   srtp is newer but may not compile on older systems.
+   renaming srtp-1.4 to srtp and using srtplib v1.4.0 
+   will possibly help!
+
+3. Features which are conditional code:
+   thread use for audio (default=yes)
+   SPEEX   - the SPEEX codec (default=yes)
+   lipo    - use language internationalisation (default=no)
+             little was done for translations (exept German)
+   srtp    - use SRTP (default=no)
+             SRTP may not work on 64-bit processors
+   presact - activity check for presence (default=no)
+   endian  - set to big endian (default is little)
+   debug   - turn on debugging (default=no)
+
+you may activate/deactivate theese features using the ./configure script
+
+4. A step by step compile guide can be found in INSTALL
+
+5. The file names in KPhoneSI.kdevelop and Doxyfile need some adaption before use
+
+6. Documentation overview:
+
+INSTALL          : How to build kphone
+CHANGES          : The change history
+MISSING          : Features which could be implemented in later 
+                   versions of kphoneSI.
+HOWTO-kphonering : Hints to use the new ringing capabilities
+HOWTO-SRTP       : Short description how to use SRTP 
+HOWTO-Dialer     : Short description how to use the remote dialler
+HOWTO-r-FLAG     : The new -r command line flag
+HOWTO-Shortcuts  : Shortcuts to use kphone
+document/*       : THE usermanual, start reading from document/index.html
+

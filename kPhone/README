@@ -1,0 +1,117 @@
+----------------------------------------------------------------------
+KphoneSI (kpsi) 1.1
+----------------------------------------------------------------------
+
+KphoneSI (kpsi)  is a SIP (Session Initiation Protocol) user agent 
+for Linux, with which you can initiate VoIP (Voice over IP) connections 
+over the Internet, send Instant Messages, subscribe your friends' 
+presence information and start other applications of your choice
+
+The KphoneSI is an extention of the KPhone (http://www.wirlab.net/kphone/)
+
+The original KPhone was written by Billy Biggs, the latest version by Pekka
+Raisio, Jouni Vuorela and Juha Heinanen at Wirlab with suggestions and
+fixes from the KPhone community around the world.
+
+The KPhone SI is written by Klaus Fleischmann with various contributions 
+from others and is still in development.
+
+This software package is tested on different Linux brands, gcc up to gcc 4.2.1
+works well. Currently srtp crashs on 64-bit maxchines
+
+This software package comes with NO warranty. You should note that by
+downloading, compling and installing it you agree to full self
+responsibility.
+
+Note: "This program is released under the GPL with the additional
+exemption that compiling, linking, and/or using OpenSSL is allowed."
+
+
+How to make and receive  a call with KPhone?
+=============================================
+When starting kpsi for the first time, you should enter your identity 
+information in the window appearing. The information required for 
+successful sipping are: 'Full Name', 'User part of SIP URL' and 
+'Host part of SIP URL'. Filling the 'Outbound Proxy' Field is recommended,
+possibly necessary. Study you provider's documentation for the details.
+The field should contain your proxy's IP address or that of a Media Gateway
+if used. If your provider demands authentication, the Authentication user' id
+may be entered here, too. The password is asked for in a special popup-window 
+Mark the auto register selection if you wish kpsi to automatically register 
+your identity on application start. If you want to use multiple identities, 
+start KPhone SI with the '-u' option and the username of your selection.
+
+If you are behind a NAT (Network Address Translation) device, you should go 
+to Preferences->SIP-Preferences->Socket and check the 'Use STUN Server' and 
+specify the STUN server's IP address.
+
+To start a call you type the SIP-URI and then select the call type (audio, 
+video, ...) A started call is displayed in the 'Session Info' window, right
+clicking an entry pops up a window with the controls for that call. This 
+is also the place where you release the call (hangup entry).
+
+An incoming call shows up in the 'Session Info' window, too. It is painted 
+red. To accept the call, double click that window.
+
+
+Compilation hints
+=================
+
+KphoneSI (kpsi) requires various programming libraries and header 
+files (Qt, OpenSSL et al) to be present in the system. 
+
+The source comes with two srtp subdirectories. srtp is newer but may not compile 
+on older systems. Renaming srtp-1.4 to srtp and using srtplib v1.4.0 will possibly help!
+BE AWARE, srtp could crash on 64-bit systems
+
+Features which are conditional code:
+------------------------------------
+* Thread usage. Use always, if possible. The default is enabled.
+
+* Speex, the default is enabled, exclude it from compiling with --enable-speex=no on 
+ the configure cmdline
+
+* Internationalisation, the default is disabled, include it to compiling with
+  --enable-lipo=yes on the configure cmdline
+
+* SRTP, the default is disabled, include it to compiling with --enable-srtp=yes
+ on the configure cmdline
+
+* Presence: user activity detection. The default is disabled, include it to compiling 
+ with --enable-presact=yes on the configure cmdline
+
+* Support of big endian machines. The default is disabled , include it to compiling 
+ with --enable-endian=yes on the configure cmdline
+
+* Debugging support. The default is disabled, include it to compiling with 
+ --enable-debug=yes on the configure cmdline 
+
+Before compiling:
+-----------------
+Please read INSTALL !!! There you find a step by step compile guide.
+
+The use of KPhoneSI.kdevelop and doxyfile. 
+_________________________________________
+Both script files use absolute paths! If you do not use /usr/local as base directory,
+displace it with your choice.
+  
+Using KDevelop and doxygen with KPhone:
+=======================================
+The scripts KPhoneSI.kdevelop and Doxyfile assume your sources are /usr/local/src.
+Check if you have to adapt this to your locations.
+
+
+Document overview:
+==================
+INSTALL          : How to build kphone
+CHANGES          : The change history
+MISSING          : Features which could be implemented in later 
+                   versions of kphoneSI.
+HOWTO-kphonering : Hints to use the new ringing capabilities
+HOWTO-srtp       : Short description how to use SRTP 
+HOWTO-Dialer     : Short description how to use the remote dialler
+HOWTO-r-FLAG     : The new -r command line flag
+HOWTO-Shortcuts  : Shortcuts to use kphone
+document/*       : THE usermanual, start reading from document/index.html
+
+

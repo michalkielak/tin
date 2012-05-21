@@ -1,0 +1,61 @@
+CXX=@CXX@
+MOC=@MOC@
+
+AFLAGS=-g
+#CFLAGS=@CFLAGS@ -I. -I.. -I../gsm -I../ilbc @DEFS@
+CFLAGS=@CFLAGS@ -I. -I.. @DEFS@
+CXXFLAGS=$(CFLAGS)
+
+LIBS=@LIBS@
+
+OBJS = headerparser.o\
+	messagesocket.o\
+	sipcall.o sipcall.moc.o\
+	sipclient.o sipclient.moc.o\
+	sipheader.o\
+	sipmessage.o\
+	sipstatus.o\
+	sipuri.o\
+	sipvia.o\
+	mimecontenttype.o\
+	tcpmessagesocket.o\
+	sdpbuild.o\
+	udpmessagesocket.o\
+	siptransaction.o siptransaction.moc.o\
+	sipregister.o sipregister.moc.o\
+	sippublish.o sippublish.moc.o\
+	siputil.o\
+	sipprotocol.o\
+	sipuser.o\
+	parameterlist.o\
+	sipvialist.o\
+	sipurilist.o\
+	extern_md5.o\
+	base64.o
+
+
+#MOCH=	sipcall.h sipclient.h siptransaction.h sipregister.h
+#MOBJS := $(patsubst %.h, %.moc.o, $(MOCH))
+
+all:	dissipate2.a
+
+.cpp.o:
+	$(CXX) $(CXXFLAGS) -c -o $@ $<
+
+%.moc.cpp: %.h
+	$(MOC) -o $@ $<
+
+clean:
+	rm -f *.o *.a *~ *.moc.cpp *.bak
+
+distclean:	clean
+	rm -f Makefile
+
+dep:
+	makedepend -- $(CXXFLAGS) *.cpp
+
+#dissipate2.a: $(OBJS) $(MOBJS)
+#	ar rcs $@ $(OBJS) $(MOBJS)
+
+dissipate2.a: $(OBJS)
+	ar rcs $@ $(OBJS)

@@ -1,0 +1,103 @@
+CXX=@CXX@
+MOC=@MOC@
+X_CFLAGS=@X_CFLAGS@
+
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+SHARE_DIR=@datadir@/KPhoneSI
+BIN_DIR=@bindir@
+MAN_DIR=${exec_prefix}/man/man1
+
+ifeq (@ENABLE_LIPO@,yes)
+
+LI= -DPO_DIR=\"${SHARE_DIR}/translations//\"
+endif
+
+MOREDEFS=-DSHARE_DIR=\"$(SHARE_DIR)\" $(LI) 
+
+CFLAGS=@CFLAGS@ @X_CFLAGS@  -I. -I../gsm -I../ilbc -I../dissipate2 -I/usr/local/include/speex @DEFS@ $(MOREDEFS)
+CXXFLAGS=$(CFLAGS)
+
+
+ifeq (@ENABLE_SRTP@,yes)
+SR=srtp
+LR=-L/usr/local/lib/srtp
+endif
+
+ifeq (@ENABLE_PRESACT@,yes)
+PR=idletimedetector.o idletimedetector.moc.o
+endif
+
+ifeq (@ENABLE_SPEEX@,yes)
+SP=Speex
+endif
+
+
+LIBS=@LIBS@ -lssl -lcrypto -lresolv $(LR)  @LIBALSA@
+
+LDFLAGS=@LDFLAGS@ -g
+
+
+SUBLIBS=kaudio dissipate2 $(SR)  gsm ilbc $(SP) 
+
+
+SUBS:=$(foreach sub,$(SUBLIBS), ../$(sub)/$(sub).a)
+
+
+
+OBJS=\
+	main.o\
+	kphone.o kphone.moc.o\
+	khelp.o khelp.moc.o\
+	kdtmf.o kdtmf.moc.o\
+	kstatics.o\
+	kphoneview.o kphoneview.moc.o\
+	menulistview.o menulistview.moc.o\
+	calllistview.o calllistview.moc.o\
+	kcallview.o kcallview.moc.o\
+	kreferdialog.o kreferdialog.moc.o\
+	kcallwidget.o kcallwidget.moc.o\
+	kinstantmessagewidget.o kinstantmessagewidget.moc.o\
+	callaudio.o callaudio.moc.o\
+	sessioncontrol.o sessioncontrol.moc.o\
+	kphonebook.o kphonebook.moc.o\
+	ksipregistrations.o ksipregistrations.moc.o\
+	ksipauthentication.o ksipauthentication.moc.o\
+	audiocontrol.o audiocontrol.moc.o\
+	videocontrol.o videocontrol.moc.o\
+	extcontrol.o extcontrol.moc.o\
+	ksippreferences.o ksippreferences.moc.o\
+	ksipoptions.o ksipoptions.moc.o \
+	watcherlist.o watcherlist.moc.o \
+	$(PR)\
+	trayicon.o trayicon.moc.o
+.cpp.o:
+	$(CXX) $(CXXFLAGS) -c -o $@ $<
+
+%.moc.cpp: %.h
+	$(MOC) -o $@ $<
+
+all:	kpsi
+
+install:	all
+	install --mode=0755 --directory $(BIN_DIR)
+	install --strip kpsi $(BIN_DIR)
+	install -D --mode=0644 kphone.1 $(MAN_DIR)/kphone.1
+	install -D --mode=0644 kpsi.1 $(MAN_DIR)/kpsi.1
+uninstall:
+	rm -f $(BIN_DIR)/kphone 
+	rm -f $(MAN_DIR)/kphone.1 
+	rm -f $(MAN_DIR)/kpsi.1
+clean:
+	rm -f kpsi *.o *.a *~ *.moc.cpp *.bak core
+
+distclean:	clean
+	rm -f Makefile
+
+dep:
+	makedepend -- $(CXXFLAGS) *.cpp
+
+kpsi:	$(OBJS) $(SUBS)
+	$(CXX) -o $@ $(LDFLAGS) $(OBJS) $(SUBS) $(LIBS)
+
+

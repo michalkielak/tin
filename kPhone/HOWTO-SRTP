@@ -1,0 +1,27 @@
+KPhone SRTP 
+
+Brief:
+=====
+      This extension provides voice encryption based on the SRTP protocol. 
+      
+Installation:
+============
+     see kphoneSI's INSTALL file
+     
+Configuration:
+=============
+      Most of the configuration can be set via the GUI 
+      (Preferences->SIP Preferences->SRTP).
+      - select the Pre-Shared Key (PSK) toggle button
+      - enter your SRTP Master key (the master key is a 30 char text.
+        Your partner must use the same key!
+      - Press OK
+
+Security features:
+=================
+      The RTP Data is encrypted with a AES counter mode 128 bit cipher.
+
+
+Limitations:
+============
+Currently this code may not run on all 64-bit CPUs      

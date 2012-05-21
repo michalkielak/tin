@@ -1,0 +1,146 @@
+#include <iostream>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <sys/time.h>
+#include <sys/socket.h>
+#include <sys/ioctl.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <netdb.h>
+#include <arpa/nameser.h>
+#include <resolv.h>
+#include <fcntl.h>
+#include <errno.h>
+#include <unistd.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <cstring>
+#include <pthread.h>
+#include "udpmessagesocket.h"
+#define SRV_IP "127.0.0.1"
+#define BUFLEN 512
+#define NPACK 10
+#define PORT 8060
+using namespace std;
+
+void *server(void *threadid);
+
+void diep(char *s)
+{
+  perror(s);
+  exit(1);
+}
+
+int main() {
+
+			string msg = "INVITE sip:stud5@194.29.169.4 SIP/2.0";
+			msg+= "Via: SIP/2.0/UDP 194.29.169.4:8060;branch=z9hG4bK343bf628;rport";
+			msg+= "From: Test15 <sip:15@10.10.1.99>tag=as58f4201b";
+			msg+= "To: <sip:stud5@194.29.169.4>";
+			msg+= "Contact: <sip:stud6@194.29.169.4>";
+			msg+= "Call-ID: 326371826c80e17e6cf6c29861eb2933@194.29.169.4";
+			msg+= "CSeq: 102 INVITE";
+			msg+= "User-Agent: Asterisk PBX";
+			msg+= "Max-Forwards: 70";
+			msg+= "Date: Wed, 06 Dec 2009 14:12:45 GMT";
+			msg+= "Allow: INVITE, ACK, CANCEL, OPTIONS, BYE, REFER, SUBSCRIBE, NOTIFY";
+			msg+= "Supported: replaces";
+			msg+= "Content-Type: application/sdp";
+			msg+= "Content-Length: 258";
+			msg+= " ";
+			msg+= "v=0";
+			msg+= "o=root 1821 1821 IN IP4 194.29.169.4";
+			msg+= "s=session";
+			msg+= "c=IN IP4 194.29.169.4";
+			msg+= "t=0 0";
+			msg+= "m=audio 11424 RTP/AVP 0 8 101";
+			msg+= "a=rtpmap:0 PCMU/8000";
+			msg+= "a=rtpmap:8 PCMA/8000";
+			msg+= "a=rtpmap:101 telephone-event/8000";
+			msg+= "a=fmtp:101 0-16";
+			msg+= "a=silenceSupp:off - - - -";
+			msg+= "a=ptime:20";
+			msg+= "a=sendrecv";
+
+			pthread_t thread;
+			int rc;
+			int i=0;
+		rc = pthread_create(&thread, NULL,server, (void*)i);
+		  if (rc){
+			 cout << "Error:unable to create thread," << rc << endl;
+			 exit(-1);
+		  }
+		  sleep(1);
+		  int sockfd, portno, n;
+		     struct sockaddr_in serv_addr;
+		     struct hostent *server;
+
+		     char buffer[256];
+		     portno = PORT;
+		     sockfd = socket(AF_INET, SOCK_STREAM, 0);
+		     if (sockfd < 0)
+		         printf("ERROR opening socket");
+		     server = gethostbyname(SRV_IP);
+		     if (server == NULL) {
+		         fprintf(stderr,"ERROR, no such host\n");
+		         exit(0);
+		     }
+		     bzero((char *) &serv_addr, sizeof(serv_addr));
+		     serv_addr.sin_family = AF_INET;
+		     bcopy((char *)server->h_addr,
+		          (char *)&serv_addr.sin_addr.s_addr,
+		          server->h_length);
+		     serv_addr.sin_port = htons(PORT);
+		     if (connect(sockfd,(struct sockaddr *) &serv_addr,sizeof(serv_addr)) < 0)
+		         printf("ERROR connecting");
+		     //printf("Please enter the message: ");
+		     bzero(buffer,256);
+		     //fgets(buffer,255,stdin);
+		     n = write(sockfd,msg.c_str(),msg.length());
+		     if (n < 0)
+		          printf("ERROR writing to socket");
+		     bzero(buffer,256);
+		     n = read(sockfd,buffer,255);
+		     if (n < 0)
+		          printf("ERROR reading from socket");
+		     printf("%s\n",buffer);
+		     close(sockfd);
+
+			return 0;
+}
+
+void *server(void *threadid)
+{
+	 int sockfd, newsockfd, portno;
+	     socklen_t clilen;
+	     char buffer[256];
+	     struct sockaddr_in serv_addr, cli_addr;
+	     int n;
+	     sockfd = socket(AF_INET, SOCK_STREAM, 0);
+	     if (sockfd < 0)
+	        printf("ERROR opening socket");
+	     bzero((char *) &serv_addr, sizeof(serv_addr));
+	     portno = PORT;
+	     serv_addr.sin_family = AF_INET;
+	     serv_addr.sin_addr.s_addr = INADDR_ANY;
+	     serv_addr.sin_port = htons(portno);
+	     if (bind(sockfd, (struct sockaddr *) &serv_addr,
+	              sizeof(serv_addr)) < 0)
+	              printf("ERROR on binding");
+	     listen(sockfd,5);
+	     clilen = sizeof(cli_addr);
+	     newsockfd = accept(sockfd,
+	                 (struct sockaddr *) &cli_addr,
+	                 &clilen);
+	     if (newsockfd < 0)
+	          printf("ERROR on accept");
+	     bzero(buffer,256);
+	     n = read(newsockfd,buffer,255);
+	     if (n < 0) printf("ERROR reading from socket");
+	     printf("Here is the message: %s\n",buffer);
+	     n = write(newsockfd,"I got your message",18);
+	     if (n < 0) printf("ERROR writing to socket");
+	     close(newsockfd);
+	     close(sockfd);
+	pthread_exit(NULL);
+}

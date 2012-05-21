@@ -1,0 +1,62 @@
+#CPP=@CPP@
+CXX=@CXX@
+#CC=@CC@
+
+AFLAGS=-g
+CFLAGS=@CFLAGS@ -O2 -I. -I.. @DEFS@
+CXXFLAGS=$(CFLAGS)
+
+LIBS=@LIBS@
+
+OBJS = bits.o\
+    cb_search.o\
+    exc_10_16_table.o\
+    exc_10_32_table.o\
+    exc_20_32_table.o\
+    exc_5_256_table.o\
+    exc_5_64_table.o\
+    exc_8_128_table.o\
+    filters.o\
+    gain_table.o\
+    gain_table_lbr.o\
+    hexc_10_32_table.o\
+    hexc_table.o\
+    high_lsp_tables.o\
+    lpc1.o\
+    lsp.o\
+    lsp_tables_nb.o\
+    ltp.o\
+    math_approx.o\
+    misc.o\
+    modes.o\
+    nb_celp.o\
+    quant_lsp.o\
+    sb_celp.o\
+    speex_callbacks.o\
+    speex_decode.o\
+    speex_encode.o\
+    speex_header.o\
+    stereo.o\
+    vbr.o\
+    vq.o
+
+all:	Speex.a
+
+%.o:	%.S
+	$(CXX) $(CXXFLAGS) -c -o $@ $<
+
+#%.o:	%.S
+#	$(CC) $(CFLAGS) -c -o $@ $<
+
+clean:
+	rm -f *.o *.a *~ *.moc.cpp *.bak
+
+distclean:	clean
+	rm -f Makefile
+
+dep:
+	makedepend -- $(CXXFLAGS) *.cpp
+
+Speex.a: $(OBJS)
+	ar rcs $@ $(OBJS)
+

@@ -1,0 +1,118 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+  <meta http-equiv="CONTENT-TYPE" content="text/html; charset=utf-8">
+  <title>How to Call</title>
+  <meta name="GENERATOR" content="OpenOffice.org 1.1.1  (Linux)">
+  <meta name="CREATED" content="20051015;8391400">
+  <meta name="CHANGED" content="20051015;8460200">
+  <style type="text">
+	<!--
+		@page { size: 21cm 29.7cm; margin-left: 2cm; margin-right: 2cm; margin-top: 0.8cm; margin-bottom: 0.8cm }
+		TD P.cjk { font-weight: medium }
+		TD P.ctl { font-weight: medium }
+		H1.western { font-family: "Nimbus Sans L" }
+		P.cjk { font-weight: medium }
+		P.ctl { font-weight: medium }
+	-->
+	</style>
+</head>
+<body dir="ltr" lang="en-US">
+<a href="index.html">back to the ToC</a>
+<h1 class="western"
+ style="margin-top: 0cm; margin-bottom: 0.2cm; page-break-before: always;"><a
+ class="mozTocH1" name="mozTocId730821"></a>KPhoneIS
+User Manual:&nbsp;
+How to Call Point to point</h1>
+<br>
+<ol id="mozToc">
+<!--mozToc h1 1 h2 2 h3 3 h4 4 h5 5 h6 6-->
+  <li><a href="#mozTocId730821">KPhoneIS
+User Manual:&nbsp;
+How to Call Point to point</a>
+    <ol>
+      <li><a href="#mozTocId636234">Preconditions</a></li>
+      <li><a href="#mozTocId316631">Setup</a>
+        <ol>
+          <li><a href="#mozTocId497026">using the -t option </a></li>
+          <li><a href="#mozTocId360866">setup by hand</a></li>
+        </ol>
+      </li>
+      <li><a href="#mozTocId737845">Dial </a></li>
+      <li><a href="#mozTocId397671">Caveat Nat Traversal </a></li>
+    </ol>
+  </li>
+</ol>
+<h2><a class="mozTocH2" name="mozTocId636234"></a>Preconditions</h2>
+- Always use UDP<br>
+<br>
+- Your partner needs to&nbsp; know your signaling port, thus:<br>
+<div style="margin-left: 40px;">- you have to tell her<br>
+- you&nbsp; have to grant that this port is unused, when you start
+kphone</div>
+<h2><a class="mozTocH2" name="mozTocId316631"></a>Setup</h2>
+There are two ways to setup point to point call:<br>
+<ol>
+  <li>Use the -t option, does some setup steps automatically<br>
+  </li>
+  <li>setup by hand</li>
+</ol>
+In both cases you have to fix the port to a value, your possible
+partnes know:<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; use<span
+ style="font-weight: bold; font-style: italic;"> -p &lt;port number&gt;</span>
+on the command line to do so<br>
+<h3><a class="mozTocH3" name="mozTocId497026"></a>using the -t option<br>
+</h3>
+If you plan to use the<span style="font-weight: bold;"> -t</span>
+option:<br>
+<ol>
+  <li>define a entry in the .kphonesirc (-u &lt;name of your choice&gt;)</li>
+  <li>specify a port <span style="font-style: italic;">(-p &lt;port
+number&gt;</span>) </li>
+  <li>set -t 4&nbsp; from command line, use
+-t 6 if you look for IPv6 instead!<br>
+  </li>
+</ol>
+The rest is straigth forward, the phone will set <br>
+<ol>
+  <li>your userid to the previously selected port number<br>
+  </li>
+  <li>your proxy to your IP-Address</li>
+  <li>switch of registering</li>
+</ol>
+<h3><a class="mozTocH3" name="mozTocId360866"></a>setup by hand</h3>
+<ol>
+  <li>define a entry in the .kphonesirc (-u &lt;name of your choice&gt;)</li>
+  <li>specify a port <span style="font-style: italic;">(-p &lt;port
+number&gt;</span>)</li>
+  <li>enter the identity panel</li>
+</ol>
+In the identity panel:<br>
+<ol>
+  <li>set a userid of your choice</li>
+  <li>set your host's ip as proxy (in case of IPv6 remebers numerical
+addresses must in square brackets ([fec0::1]:5000)<br>
+  </li>
+  <li>switch of registering</li>
+</ol>
+<h2><a class="mozTocH2" name="mozTocId737845"></a><span
+ style="font-weight: bold;">Dial</span><br>
+</h2>
+<p class="western" style="margin-bottom: 0cm;">Session are started the
+same way as in the proxy case. Please keep in mind:<br>
+</p>
+<ol>
+  <li>point to point calls only work if both partners are set up point
+to point</li>
+  <li>&nbsp;your partners URI must contain a port number, if she
+selected one</li>
+</ol>
+<h2><a class="mozTocH2" name="mozTocId397671"></a>Caveat Nat Traversal<br>
+</h2>
+Point to point does not work yet if a NAT has to be passed. <br>
+<p class="western" style="page-break-before: always;"><a
+ href="index.html">back
+to the ToC</a></p>
+</body>
+</html>

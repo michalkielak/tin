@@ -1,0 +1,31 @@
+CXX=@CXX@
+#CC=@CC@
+
+AFLAGS=-g
+CFLAGS=-I/usr/local/include/srtp -I- @CFLAGS@ -I. -I.. @DEFS@ @THREAD_FLAG@
+CXXFLAGS=$(CFLAGS)
+
+LIBS=@LIBS@
+
+OBJS = SRTPWrapper.o
+
+all:	srtp.a
+
+
+%.o:	%.S
+	$(CXX) $(CXXFLAGS) -c -o $@ $<
+
+#%.o:	%.S
+#	$(CC) $(CFLAGS) -c -o $@ $<
+
+clean:
+	rm -f *.o *.a *~ *.moc.cpp *.bak
+
+distclean:	clean
+	rm -f Makefile
+
+dep:
+	makedepend -- $(CXXFLAGS) *.cpp
+
+srtp.a: $(OBJS)
+	ar rcs $@ $(OBJS)

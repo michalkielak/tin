@@ -1,0 +1,54 @@
+#CPP=@CPP@
+CXX=@CXX@
+#CC=@CC@
+
+AFLAGS=-g
+CFLAGS=@CFLAGS@ -I. -I.. @DEFS@
+CXXFLAGS=$(CFLAGS)
+
+LIBS=@LIBS@
+
+OBJS = anaFilter.o\
+	iCBSearch.o\
+	packing.o\
+	constants.o\
+	gainquant.o\
+	iLBC_decode.o\
+	StateConstructW.o\
+	createCB.o\
+	getCBvec.o\
+	iLBC_encode.o\
+	StateSearchW.o\
+	doCPLC.o\
+	helpfun.o\
+	syntFilter.o\
+	enhancer.o\
+	hpInput.o\
+	LPCdecode.o\
+	filter.o\
+	hpOutput.o\
+	LPCencode.o\
+	FrameClassify.o\
+	iCBConstruct.o\
+	lsf.o
+
+all:	ilbc.a
+
+%.o:	%.S
+	$(CXX) $(CXXFLAGS) -c -o $@ $<
+
+#%.o:	%.S
+#	$(CC) $(CFLAGS) -c -o $@ $<
+
+clean:
+	rm -f *.o *.a *~ *.moc.cpp *.bak
+
+distclean:	clean
+	rm -f Makefile
+
+dep:
+	makedepend -- $(CXXFLAGS) *.cpp
+
+ilbc.a: $(OBJS)
+	ar rcs $@ $(OBJS)
+

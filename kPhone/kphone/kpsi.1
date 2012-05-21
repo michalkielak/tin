@@ -1,0 +1,63 @@
+.TH kpsi 1
+.SH NAME
+kpsi (KPhone SI) - A  SIP User Agent
+.SH SYNOPSIS
+.B kpsi [-u <user>] [-a <host>] [-p <port>[:n]] [-t] [-r] [-n] 
+.SH Options
+.TP
+\fB-u <user>\fR  \fIuser identification in database\fR
+.br
+<user> is not the user part of the SIP-URI (SIP-Phone number), but the user's ID in the database ($HOME/.qt/kphonesirc)
+.TP
+\fB-a <host>\fR \fIdissipate-host\fR
+.br
+<host> the IP address of the interface used by the phone (i.e. your computer's address). If this parameter is not set, KPhoneSI scans the interface table. Th user is ask to make the choice.
+.TP
+\fB-p <port>[:n]\fR \fIport number you listen on\fR
+.br
+<port> The listen-to port. It is used to address the UA from outside. Your value is stored in the settings. The value 0 resets the port to 5060, what is also the default, if the setting is not set. If your value is in use KPhoneSI finds a new one greater then your value.
+If the port of your choice is used, \fBn\fR gives the allowed numbers of retrys to find a new port. The value 0 allows only your port.
+.TP
+\fB-l\fR \fIloose route\fR
+.br
+.TP
+\fB-s\fR \fIstrict route\fR
+.br
+.TP
+\fB-r\fR \fIsend requests to the To-URI directly\fR
+.br
+.TP
+\fB-t <nr> \fR \fIUA point to point \fR
+.br
+IPv4: 4 and IPv6: 6 are legal values
+In this case the dissipate-host equals the host part of sip URI of the UA). -t is one possible method to start point to point sessions without involving a proxy. The registration is switched off and the SIP-URI takes the form 
+sip:port@dissipate-host:port.
+.TP
+\fB-n\fR \fIdo NOT register after startup \fR
+.br
+Usefull if you want to configure the phone and to avoid startup with unknown parameters
+.br
+.SH DESCRIPTION
+When starting kpsi for the first time, you should enter your identity information in the window appearing. The information required for successful 
+sipping are:
+\fB'Full Name'\fR, \fB'User part of SIP URL'\fR and \fB'Host part of SIP URL'\fR . Filling the \fB'Outbound Proxy'\fR Field is recommended, possibly necessary. 
+Study you provider's documentation for the details. The field should contain your proxy's IP address or that of a Media Gateway if used. If your provider 
+demands authentication, the \fBAuthentication user'\fR may be entered here, too. The password is asked for in a special popup-window Mark the auto register 
+selection if you wish kpsi to automatically register your identity on application start. If you want to use multiple identities, start KPhone SI 
+with the '-u' option and the username of your selection.
+.TP 0
+If you are behind a NAT (Network Address Translation) device, you should go to \fBPreferences->SIP-Preferences->Socket\fR and check the '\fBUse STUN Server\fR' and specify  the STUN server's IP address
+.TP 0
+To start a call you type the SIP-URI and then select the call type (audio, video, ...)
+.TP 0
+A started call is displayed in the \fB'Session Info'\fR window, right clicking an entry pops up  a window with the controls for that call.
+This is the place where you release the call (hangup entry). 
+.TP 0
+An incoming call shows up in the 'Session Info' window, too. It is painted red. To accept the call, double click that window.
+.TP 0
+You should edit the \fBPhone Book\fR and enter all your favorite contacts there.  Of course this is not mandatory but it increases 
+your efficiency with kpsi. When adding contacts to your Phone Book, simply click Add and enter the person's real name,  SIP identity and the 
+optional description. If you double click a existing contact,  the URI appears in the dial window. 
+.TP 0
+The Phone Book is the place to request \fBpresence information\fR. The presence info is displayed in the \fBpresence window (buddy list)\fR. If you right click an entry, it pops up a window with the media types allowing you to start a call with that buddy.
+ 

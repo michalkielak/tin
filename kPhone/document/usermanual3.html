@@ -1,0 +1,675 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+  <meta http-equiv="CONTENT-TYPE" content="text/html; charset=utf-8">
+  <title>How to configure the Phone</title>
+  <style type="text"> </style>
+</head>
+<body dir="ltr" lang="en-US">
+<a href="index.html">back to the ToC</a>
+<h1 class="western" style="page-break-before: always;">KPhoneIS
+User Manual: How to
+configure the Phone</h1>
+<big><span style="font-weight: bold;">Table of Contents<br>
+<br>
+</span></big>
+<ul>
+  <li><a href="#FI">Identity</a></li>
+  <li><a href="#sp">SIP Preferences</a></li>
+  <li><a href="#sps">SIP_Preferences-&gt;Socket</a></li>
+  <li><a href="#spc">SIP_Preferences-&gt;Call
+Forwarding</a></li>
+  <li><a href="#ap">Audio Preferences
+(with Ringing)</a></li>
+  <li><a href="#vp">Video Preferences</a></li>
+  <li><a href="#ct">External Sessions<br>
+    </a></li>
+  <li><a href="#pb">Phonebook</a></li>
+  <li><a href="#srtp">SRTP</a></li>
+</ul>
+<h2><a name="FI"></a>File -&gt; Identity (Who are we)</h2>
+<p class="western">Ask your provider/sysadmin for the parameters you
+have to enter here !</p>
+<ul>
+  <li>
+    <p class="western" style="margin-bottom: 0cm;"><i>Full Name:</i> A
+freely chosen name or URL of the user; some providers require to set
+the User-ID here</p>
+  </li>
+  <li>
+    <p class="western" style="margin-bottom: 0cm;"><i>User Part of SIP
+URL:</i> SIP-User ID</p>
+  </li>
+  <li>
+    <p class="western" style="margin-bottom: 0cm;"><i><span lang="de-DE">Host</span>
+Part of SIP URL:</i> the address or domain name of the used Proxy
+Server.</p>
+  </li>
+  <li>
+    <p class="western" style="margin-bottom: 0cm;"><i>Outbound Proxy</i>:
+If set, all SIP-packages are sent to it<b>. </b> </p>
+  </li>
+  <li>
+    <p class="western" style="margin-bottom: 0cm;"><i>Authentication
+Username:</i> If authentication is mandatory, enter the authentication
+user name here.</p>
+  </li>
+  <li>
+    <p class="western" style="margin-bottom: 0cm;"> Clear Password? Set
+this to clear your stored password.</p>
+  </li>
+  <li>
+    <p class="western" style="margin-bottom: 0cm;"><i>Auto Register</i>
+should be set, if registration at UA startup is wanted. </p>
+  </li>
+</ul>
+<img style="width: 224px; height: 372px;" alt="ident0" src="ident0.png"><br>
+<p class="western">At last the changes are solicited with "OK".
+Please restart KPhoneSI, to activate your changes</p>
+<br clear="left">
+<br>
+<h2><a name="sp"></a>Preferences -&gt; SIP Preferences </h2>
+<p class="western" style="margin-bottom: 0cm;"><span
+ style="font-weight: bold;">First Part<br>
+<img alt="settings1" src="sippref-settings1.png"
+ style="width: 420px; height: 439px;" align="middle"><br>
+</span></p>
+<ul>
+  <li>a Forwards Number
+of proxies the messages may pass </li>
+  <li>&nbsp;Expire time of
+registration. Contact your provider for the value (240 sec is a good
+choice!) </li>
+  <li>Wait between DTMF
+sequences, adapt to the requirements of your DTMF device</li>
+  <li>Expire time of
+presence subscription A low value may flood the network,&nbsp;
+300&nbsp;
+sec or more are&nbsp; a good choice</li>
+  <li>Publish expire time, if 0 no presence server will be used. A low
+value may flood the network, 300&nbsp;
+sec or more are&nbsp; a good choice.</li>
+</ul>
+The next parameters are used, if you use a central presence server<br>
+<ul>
+  <li>User activity check time (scaled in minutes). If you use presence
+and have a timer value &gt; 0 , your presence subscriber will know, if
+you are active on your PC</li>
+  <li>Watcher Info Subscription. Subscribe for your presentity's
+watcherinfo. Yes makes only sense if you use a central presence server<br>
+  </li>
+</ul>
+<br>
+<span style="font-weight: bold;">Second part<br>
+<br>
+<img alt="settings 2" src="sippref-settings2.png"
+ style="width: 340px; height: 415px;"><br>
+</span>
+<br>
+<ul>
+  <li>Remote Dialer, set only if you plan to use this tool</li>
+  <li>RFC 3262 implementation<br>
+  </li>
+  <li>A&nbsp; REFER Sip Command implicitely creates a subscription for
+the call progress of the new-session-setup of the transferee . If you
+do not need that, set the flag to no. The setting becomes active, if
+you peer agrees not to use the implicit subscription, too.<br>
+  </li>
+  <li>Expire Time of CT Notification, if you are waiting for
+new-session-setup notification and the partner sends no, this timer
+helps!<br>
+  </li>
+</ul>
+<br>
+<br>
+<br>
+<h2><a name="sps"></a>Preferences -&gt; SIP Preferences -&gt; Socket</h2>
+<p class="western" style="margin-bottom: 0cm;">In many cases the
+defaults will work, you possible have to ask your provider for the
+correct choice.</p>
+<p class="western" style="margin-bottom: 0cm;">Users behind a NAT
+and/or <span lang="de-DE">firewalls</span> , should may possibly set
+the option "Use STUN Server" and enter a STUN. For details,
+please ask your provider!<br>
+<br>
+</p>
+<p class="western"><img alt="settings-socket" src="sippref-socket.png"
+ style="width: 356px; height: 437px;"><br clear="left">
+</p>
+<span style="font-weight: bold;">About the "Server" Location&nbsp;
+button box: </span><br>
+This is not used, if you specified an outbound proxy!<br>
+In all other cases:
+<li>&nbsp;"DNS only" is a good choice, if the host name is a valid IP
+address</li>
+<li>If the host name is a domain (for example iptel.org) "use SRV"
+and "use NAPTR" help you to select the right SIP server. Try "use
+NAPTR" first, "use SRV" is a fallback.</li>
+</body>
+<br>
+<body dir="ltr" lang="en-US">
+<h2><a name="spc"></a>Preferences -&gt; SIP Preferences -&gt;Call <span
+ lang="de-DE">Forwarding and Auto Answer<br>
+</span></h2>
+<p class="western" style="margin-bottom: 0cm;">Implemented are :</p>
+<ul>
+  <li>
+    <p class="western" style="margin-bottom: 0cm;">Call Forwarding U<span
+ lang="de-DE">nconditional</span>, <span lang="de-DE">your call will
+be forwarded to an other URI (number) as soon it reaches your UA. T</span>he
+“Forward to” field must be supplied with the forward to URI (
+&lt;sip:user@proxy&gt;)</p>
+  </li>
+</ul>
+<ul>
+</ul>
+<ul>
+  <li>Call Forwarding on
+Busy, the forward to URI must be supplied(
+&lt;sip:user@proxy&gt;). If you have call running, while&nbsp; an
+otheron is active, youmay forward the new&nbsp; one by pressing the
+"Forward" button of the call widget..&nbsp; CFnA is activated if it's
+“Active”
+Flag is set.</li>
+</ul>
+<ul>
+  <li>
+    <p class="western" style="margin-bottom: 0cm;">Call Forwarding on
+no Answer, the forward to URI must be supplied(
+&lt;sip:user@proxy&gt;). The <span lang="de-DE">CFnA</span>-Count is a
+counter based on the ring tone sequence. The call is forwarded <span
+ lang="de-DE">forwarded to the forward to URI (number) </span>after
+&lt;counter&gt; ringing intervals . CFnA is activated if it's “Active”
+Flag is set.</p>
+  </li>
+  <li>
+    <p class="western" style="margin-bottom: 0cm;">Auto Answer The call
+will be accepted automatically after &lt;counter&gt; ringing intervals.
+AA is activated if the “Active” Flag is set.</p>
+  </li>
+</ul>
+<p class="western" style="margin-bottom: 0cm;"><b>Important</b>: The
+CFnA-settings and the Auto-Answer-Flag will not be stored! They must
+be supplied after every restart of the phone, if it is planned to use
+them.</p>
+<p class="western" style="margin-bottom: 0cm;"><img alt="sippref aa cf"
+ src="sippref-cf-aa.png" style="width: 356px; height: 437px;"><br
+ clear="left">
+</p>
+<p><br>
+</p>
+<h2><a name="ap"></a>Preferences -&gt; <span lang="de-DE">Audio</span>
+Preferences</h2>
+<h3>About the Soundcard</h3>
+Configuring your sound system may proof quite tricky. I hope the
+following
+hints may help you:<br>
+<br>
+<div style="margin-left: 40px;"><span style="font-weight: bold;">Plugging&nbsp;
+your headphone </span><br>
+If there are different possibilities, please test them all! Depending
+on the sound card the mic and the line-in plug&nbsp; could be the right
+places for your headphone's mic plug. You may have two sets of plugs,
+one in the front, one in the rear. I know PCs, where I had to use the
+front mic and the rear lineout!<br>
+<br>
+Select a <span style="font-weight: bold;">sound-mixer-tool </span>compatible
+to your sound card (as alsamixer, alsamixergui, KMix,and many more.
+Test, which of them handles your soundcard best).<br>
+- Play with the mic and line-in related controls. Use "mic boost"
+only&nbsp; if your mic is not loud enough without<br>
+- Check if you set your&nbsp; input device to "recording"/"capturing"<br>
+- Play with the line-out related controls<br>
+- If your sound-mixer-tool has a capture tab, it could be the place to
+make the microphone run.<br>
+<br>
+<span style="font-weight: bold;">Tuning</span> the audio card may be
+necessary, too . Your distribution's defaults may proof imperfect<br>
+</div>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; <br>
+<div style="margin-left: 40px;"><span style="font-weight: bold;">Testing
+audio</span>. Before
+blaming kphone test this:<br>
+</div>
+<ol style="margin-left: 40px;">
+  <li>First do a play &lt;some-name&gt;.wav , kphone's ring.wav is a
+choice; </li>
+  <li>Secondly rec foo.wav; speak into you mic; play foo.wav. You
+should here your recorded voice. (If you have no rec, youse cat &gt;
+instead)</li>
+</ol>
+<div style="margin-left: 40px;">If one of the tests fails, continue
+tuning and please do not blame kphone,&nbsp; otherwise file you problem<br>
+</div>
+<br>
+<h3>The Preferences </h3>
+<ul>
+  <li>
+    <p class="western" style="margin-bottom: 0cm; font-style: normal;">The
+user may select the sound system of his choice, OSS and ALSA are
+implemented</p>
+  </li>
+  <li>
+    <p class="western" style="margin-bottom: 0cm; font-style: normal;">The
+codec preference is fixed by setting (unique)values between 0 and 5
+in the position fields, the value -1 deselects a codec completely </p>
+  </li>
+  <li>
+    <p class="western" style="margin-bottom: 0cm;">For Audio calls Call
+Hold and Call Transfer are always possible. </p>
+  </li>
+</ul>
+<p class="western" style="margin-bottom: 0cm;"><img alt="audiopref."
+ src="audiopref.png" style="width: 671px; height: 485px;"><br>
+</p>
+<br>
+<table border="1" cellpadding="2" cellspacing="0" frame="below"
+ rules="rows" width="263">
+  <col width="63"> <col width="95"> <col width="93"> <tbody>
+    <tr>
+      <th width="63">
+      <p>Codec</p>
+      </th>
+      <th width="95">
+      <p>Bandwidth</p>
+      </th>
+      <th width="93">
+      <p>Quality</p>
+      </th>
+    </tr>
+    <tr>
+      <td width="63">
+      <p class="western">G.711u</p>
+      </td>
+      <td width="95">
+      <p class="western">64 Kbit</p>
+      </td>
+      <td width="93">
+      <p class="western">ISDN</p>
+      </td>
+    </tr>
+    <tr>
+      <td width="63">
+      <p class="western">GSM</p>
+      </td>
+      <td width="95">
+      <p class="western">13Kbit</p>
+      </td>
+      <td width="93">
+      <p class="western">European mobile phones</p>
+      </td>
+    </tr>
+    <tr>
+      <td width="63">
+      <p class="western" lang="de-DE">iLBC</p>
+      </td>
+      <td width="95">
+      <p class="western">15Kbit</p>
+      </td>
+      <td width="93">
+      <p class="western">n.a.</p>
+      </td>
+    </tr>
+    <tr>
+      <td width="63">
+      <p class="western" lang="de-DE">Speex</p>
+      </td>
+      <td width="95">
+      <p class="western">n.a.</p>
+      </td>
+      <td width="93">
+      <p class="western">n.a.</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p class="western" style="margin-bottom: 0cm;"><br>
+</p>
+<h3><big><big>Ringing</big></big></h3>
+<br>
+<table
+ style="width: 100%; text-align: left; background-color: rgb(255, 255, 255);"
+ border="1" cellpadding="2" cellspacing="1">
+  <tbody>
+    <tr>
+      <td style="vertical-align: top;">Ringtone:<br>
+      </td>
+      <td style="vertical-align: top;">you may chose between no tone,
+for different tones or an audio file of type wav<br>
+      </td>
+    </tr>
+    <tr>
+      <td>Ringtone Device:</td>
+      <td> Enter the audio device, you plan to use for ringing, if you
+have only one soundcard, always enter your audio device</td>
+    </tr>
+    <tr>
+      <td>Application for ringing:</td>
+      <td>We have two applications coming with kphoneSI:<br>
+      <ul>
+        <li><span style="font-weight: bold;">kphonering</span>: A
+little OSS (Open Sound System) based application. It plays some
+types of wav-files. If the file does not exist, a beep is played</li>
+        <li><span style="font-weight: bold;">kphoneringsh: </span>A
+little, very simple shell script. It calls aplay (utilty from the alsa
+package) to play your tune.</li>
+      </ul>
+To use kphoneringsh, change the "application for ringing"&nbsp; field
+to kphoneringsh.<br>
+      <br>
+If you dislike both, enter your preferred audio
+player, be aware kphoneSI calls it only once. If you plan to adapt
+kphoneringsh yourself, never use a audio player with graphical user
+interface!<br>
+      </td>
+    </tr>
+    <tr>
+      <td>Ringtone Parameters:<br>
+      </td>
+      <td>%F is the file name, %D the device name.<br>
+For kphonering
+set&nbsp; %F <br>
+kphoneringsh needs both %D&nbsp; %F<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">Ringtone Sound File<br>
+      </td>
+      <td style="vertical-align: top;">the file you plan to play<br>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<span style="font-weight: bold;"></span><br>
+<br>
+<h3><big>Hacker's Corner</big></h3>
+kphoneringsh is a shell script and so easy to adapt.<br>
+<br>
+<div style="margin-left: 40px;"><span style="font-style: italic;">#!/bin/sh</span><br
+ style="font-style: italic;">
+<span style="font-style: italic;">while true</span><br
+ style="font-style: italic;">
+<span style="font-style: italic;">do</span><br
+ style="font-style: italic;">
+<span style="font-style: italic;">aplay -D $1 $2</span><br
+ style="font-style: italic;">
+<span style="font-style: italic;">sleep 1</span><br
+ style="font-style: italic;">
+<span style="font-style: italic;">done</span><br>
+</div>
+The critical line is line 4. The parameter $1 is the %D&nbsp; $2 the %F
+variable, if you keep the default configuration for kphoneringsh. If
+you want to use a different sound tool, you should change this line.
+For example with mplayer&nbsp; as tool of your choice kphoneringsh
+looks that way:<br>
+<div style="margin-left: 40px;"><span style="font-style: italic;">#!/bin/sh</span><br
+ style="font-style: italic;">
+<span style="font-style: italic;">while true</span><br
+ style="font-style: italic;">
+<span style="font-style: italic;">do</span><br>
+<span style="font-style: italic;">mplayer -ao alsa:device=hw#$1
+$2&nbsp; .</span><br>
+<span style="font-style: italic;">sleep 1</span><br
+ style="font-style: italic;">
+<span style="font-style: italic;">done<br>
+<br>
+</span></div>
+If you use the loop swich, this is possible <br>
+<span style="font-style: italic;">#!/bin/sh</span><br
+ style="font-style: italic;">
+<span style="font-style: italic;"></span><span
+ style="font-style: italic;">mplayer -loop 0&nbsp; -ao
+alsa:device=hw#$1 $2&nbsp; .</span><br>
+<span style="font-style: italic;"></span><span
+ style="font-style: italic;"><br>
+</span>The audio manual:<br>
+<table
+ style="width: 641px; text-align: left; background-color: rgb(255, 255, 255); height: 143px;"
+ border="1" cellpadding="2" cellspacing="1">
+  <tbody>
+    <tr>
+      <td style="vertical-align: top;">Ringtone:<br>
+      </td>
+      <td style="vertical-align: top;">&nbsp;chose the 2nd button (ext.
+Device) </td>
+    </tr>
+    <tr>
+      <td>Ringtone Device:</td>
+      <td>0:0<br>
+      </td>
+    </tr>
+    <tr>
+      <td>Application for ringing:</td>
+      <td>mplayer<br>
+      </td>
+    </tr>
+    <tr>
+      <td>Ringtone Parameters:<br>
+      </td>
+      <td>%D %F <br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">Ringtone Sound File<br>
+      </td>
+      <td style="vertical-align: top;">enter the file you plan to play<br>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<br>
+The Ringtone Device may take other values, if you installed more than
+one sound card.
+<h2 style="page-break-before: always;"><a name="vp"></a>Preferences
+-&gt; <span lang="de-DE">video</span>
+Preferences </h2>
+<ul>
+  <li>
+    <p class="western" style="margin-bottom: 0cm;">The path to the
+application is set here. </p>
+  </li>
+  <li>
+    <p class="western" style="margin-bottom: 0cm; font-style: normal;">The
+codec preference is fixed by setting (unique)values between 0 and 2
+in the position fields, the value -1 deselects a codec completely </p>
+  </li>
+  <li>
+    <p class="western" style="margin-bottom: 0cm;">Call Hold and Call
+Transfer are enabled by setting the appropriate flag.</p>
+  </li>
+</ul>
+<p class="western" style="margin-bottom: 0cm;"><img alt=""
+ src="videopref.png"
+ style="border: 0px solid ; width: 470px; height: 258px;" align="left"><br
+ clear="left">
+</p>
+<h2><a name="ct"></a>Preferences-&gt;(CallType1, ... ,CallType4) – The
+External
+Sessions</h2>
+<img alt="privpref." src="privpref.png"
+ style="width: 220px; height: 438px;">
+<p class="western" style="margin-bottom: 0cm;">Provisioning for the
+generalized <span lang="de-DE">sessions:</span></p>
+<ul>
+  <li>
+    <p class="western" style="margin-bottom: 0cm;">the path to the
+application </p>
+  </li>
+  <li>
+    <p class="western" style="margin-bottom: 0cm;">the applications
+command line, the values are described below</p>
+  </li>
+  <li>
+    <p class="western" style="margin-bottom: 0cm;">the Icon</p>
+  </li>
+  <li>
+    <p class="western" style="margin-bottom: 0cm;">the V<span
+ lang="de-DE">ectorID</span></p>
+  </li>
+</ul>
+<p class="western" style="margin-bottom: 0cm;">The b<span lang="de-DE">utton
+list</span>:</p>
+<ul>
+  <li>
+    <p class="western" style="margin-bottom: 0.01cm;">Remote Startable
+If set, the “Remote Button“ of the call widget is enabled. </p>
+  </li>
+  <li>
+    <p class="western" style="margin-bottom: 0.01cm;">Hold Allowed</p>
+  </li>
+  <li>
+    <p class="western" style="margin-bottom: 0.01cm;">Transfer Allowed</p>
+  </li>
+  <li>
+    <p class="western" style="margin-bottom: 0.01cm;">Sound <span
+ lang="de-DE">Card</span> Used disallowed further calls, which have set
+the flag, too.</p>
+  </li>
+  <li>
+    <p class="western" style="margin-bottom: 0.01cm;">SDP Transport ,
+used to select the SDP transport method for this application.</p>
+  </li>
+</ul>
+The VectorID identifies
+the application. Only if both call sides use the same value, a call
+is possible.<br clear="left">
+<br>
+<br>
+These variables are
+set by the phone and can be used as Command Line parameters:
+<p class="western" style="margin-bottom: 0cm;"><br>
+</p>
+<table border="1" cellpadding="7" cellspacing="0" width="639">
+  <col width="29"> <col width="232"> <col width="334"> <tbody>
+    <tr valign="top">
+      <td width="29">
+      <p class="western">%A</p>
+      </td>
+      <td width="232">
+      <p class="western">IP Address the Peers</p>
+      </td>
+      <td width="334">
+      <p class="western"><br>
+      </p>
+      </td>
+    </tr>
+    <tr valign="top">
+      <td width="29">
+      <p class="western">%P</p>
+      </td>
+      <td width="232">
+      <p class="western">Media-port-number of the peer</p>
+      </td>
+      <td width="334">
+      <p class="western"><br>
+      </p>
+      </td>
+    </tr>
+    <tr valign="top">
+      <td width="29">
+      <p class="western">%O</p>
+      </td>
+      <td width="232">
+      <p class="western">Own media-port-number </p>
+      </td>
+      <td width="334">
+      <p class="western"><br>
+      </p>
+      </td>
+    </tr>
+    <tr valign="top">
+      <td width="29">
+      <p class="western">%I</p>
+      </td>
+      <td width="232">
+      <p class="western">Direction Flag</p>
+      </td>
+      <td width="334">
+      <p class="western"><font size="3"><b>o</b> for a Outgoing Call, <b>i</b>
+for a Incoming Call </font> </p>
+      </td>
+    </tr>
+    <tr valign="top">
+      <td width="29">
+      <p class="western">%T</p>
+      </td>
+      <td width="232">
+      <p class="western">SDP Transport </p>
+      </td>
+      <td width="334">
+      <p class="western"><br>
+      </p>
+      </td>
+    </tr>
+    <tr valign="top">
+      <td width="29">
+      <p class="western">%D</p>
+      </td>
+      <td width="232">
+      <p class="western">The Call-ID</p>
+      </td>
+      <td width="334">
+      <p class="western"><br>
+      </p>
+      </td>
+    </tr>
+    <tr valign="top">
+      <td width="29">
+      <p class="western">%L</p>
+      </td>
+      <td width="232">
+      <p class="western">Own IP-address</p>
+      </td>
+      <td width="334">
+      <p class="western"><br>
+      </p>
+      </td>
+    </tr>
+    <tr valign="top">
+      <td width="29">
+      <p class="western">%R</p>
+      </td>
+      <td width="232">
+      <p class="western">referTo address </p>
+      </td>
+      <td width="334">
+      <p class="western"><br>
+      </p>
+      </td>
+    </tr>
+    <tr valign="top">
+      <td width="29">
+      <p class="western">%M</p>
+      </td>
+      <td width="232">
+      <p class="western">own URI</p>
+      </td>
+      <td width="334">
+      <p class="western"><br>
+      </p>
+      </td>
+    </tr>
+    <tr valign="top">
+      <td width="29">
+      <p class="western">%C</p>
+      </td>
+      <td width="232">
+      <p class="western">callee's URI</p>
+      </td>
+      <td width="334">
+      <p class="western"><br>
+      </p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<h2><a name="pb"></a>Preferences-&gt;<span lang="de-DE">Phonebook</span></h2>
+<p class="western">See <a href="usermanual4.html">PhoneBook</a><br>
+</p>
+<h2><a name="srtp"></a>Preferences-&gt;SRTP</h2>
+See <a href="usermanual10.html">SRTP</a><br>
+<br>
+<br>
+<p class="western"><a href="index.html">back to the ToC</a></p>
+</body>
+</html>

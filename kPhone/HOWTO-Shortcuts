@@ -1,0 +1,26 @@
+<Ctrl>+Q      quit the phone 
+<Ctrl>+H      open online help  
+<Ctrl>+D      activate the DTMF panel  
+
+<Ctrl>+P S    open SIP preferences  
+<Ctrl>+P A    open audio preferences
+<Ctrl>+P V    open video preferences  
+<Ctrl>+P 1    open session typ 1 preferences  
+<Ctrl>+P 2    open session typ 2 preferences  
+<Ctrl>+P 3    open session typ 3 preferences  
+<Ctrl>+P 4    open session typ 4 preferences  
+
+<Ctrl>+B      open phoneBook  
+
+<return>      start audio call
+<Ctrl>+N      start audio call
+<Ctrl>+A      start audio+video call  
+<Ctrl>+V      start video call  
+<Ctrl>+1      start ext1 call  
+<Ctrl>+2      start ext2 call  
+<Ctrl>+3      start ext3 call  
+<Ctrl>+4      start ext4 call  
+
+<Ctrl>+x  means, press the Ctrl/Strng key and the x key together
+<Ctrl>+x y  means, press the Ctrl/Strng key and the x key together,
+                   release Ctrl/Strng and press y

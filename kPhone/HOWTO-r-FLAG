@@ -1,0 +1,15 @@
+If you always use an outbound proxy, you will never need 
+the -r command line parameter!!!
+
+Otherwise use the -r command line parameter to control,
+if requests are sent to the host given in the 
+- to-URI, if -r is set 
+- register-to URI,  given you are registered to that host
+  and if -r is not set
+Be aware, both destinations may be overidden by the maddr or lr
+parameters.
+
+Point to point calls are not influenced by this flag.
+
+If you want to use this feature on a call by call base, 
+precede the URI with ## in the dial window.  

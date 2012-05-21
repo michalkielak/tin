@@ -1,0 +1,42 @@
+CXX=@CXX@
+
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+SHARE_DIR=@datadir@/KPhoneSI/ring
+BIN_DIR=@bindir@
+
+
+LIBS=-lasound  
+
+
+OBJS=\
+	kphonering.o
+
+
+all:	kphonering
+
+install:	all
+	install --mode=0755 --directory $(BIN_DIR)
+	install --strip kphonering $(BIN_DIR)
+	install kphoneringsh $(BIN_DIR)
+	install --mode=0755 --directory $(SHARE_DIR)
+	install --mode=0644 ring.wav $(SHARE_DIR)
+
+uninstall:
+	rm -f $(BIN_DIR)/kphonering
+	rm -f $(BIN_DIR)/kphoneringsh
+	rm -r $(SHARE_DIR)
+
+clean:
+	rm -f kphonering *.o  *~  *.bak core
+
+distclean:	clean
+	rm -f Makefile
+
+dep:
+	makedepend -- $(CXXFLAGS) *.cpp
+
+kphonering:	$(OBJS) $(SUBS)
+	$(CXX) -o kphonering $(OBJS) $(LIBS)
+
+

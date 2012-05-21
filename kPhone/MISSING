@@ -1,0 +1,25 @@
+What's still missing in kphoneSI?
+
+- Language internationalisation may be compiled into kphoneSI, but
+  the existing po/*.ts files should be adapted!
+  Volunteers wanted!!!
+
+- Full 64 bit support for srtp
+
+- support for Bluetooth headsets; patches/code exist for kphone 4.2 
+  and  should be upgraded to KPhone SI. I personally  own no HW to test with. 
+  Volunteers wanted!!!
+
+- Presence support for xcap, eventlists and the "partial" features
+  
+- multi proxy  support, no solution in sight, volunteers wanted !!!!
+
+- audio conferencing, no solution in sight, volunteers wanted !!!!
+
+- video: vic is pretty old, and will not cooperate with a SBC!
+  No solution in sight,  volunteers wanted!!!
+  
+- video conferencing, see video!
+
+-  MIKEY: cancelled  
+
