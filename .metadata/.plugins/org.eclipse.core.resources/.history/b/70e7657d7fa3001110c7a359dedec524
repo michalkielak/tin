@@ -1,4 +1,4 @@
-/*#include <iostream>
+#include <iostream>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <sys/time.h>
@@ -20,13 +20,18 @@
 #define SRV_IP "194.29.169.4"
 #define BUFLEN 512
 #define NPACK 10
-#define PORT 8060
+#define PORT 5060
 using namespace std;
 
-void *server2(void *threadid);
+void *server(void *threadid);
 
+void diep(char *s)
+{
+  perror(s);
+  exit(1);
+}
 
-int main2() {
+int main() {
 
 			string msg = "INVITE sip:stud5@194.29.169.4 SIP/2.0";
 			msg+= "Via: SIP/2.0/UDP 194.29.169.4:8060;branch=z9hG4bK343bf628;rport";
@@ -57,7 +62,7 @@ int main2() {
 			msg+= "a=ptime:20";
 			msg+= "a=sendrecv";
 
-			pthread_t thread;
+			/*pthread_t thread;
 			int rc;
 			int i=0;
 		rc = pthread_create(&thread, NULL,server, (void*)i);
@@ -65,7 +70,7 @@ int main2() {
 			 cout << "Error:unable to create thread," << rc << endl;
 			 exit(-1);
 		  }
-		  sleep(1);
+		  sleep(1);*/
 		  int sockfd, portno, n;
 		     struct sockaddr_in serv_addr;
 		     struct hostent *server;
@@ -76,7 +81,7 @@ int main2() {
 		     if (sockfd < 0)
 		         printf("ERROR opening socket");
 		     server = gethostbyname(SRV_IP);
-		     if (server == NULL) {
+		     if (server == NULL) {213.180.141.140
 		         fprintf(stderr,"ERROR, no such host\n");
 		         exit(0);
 		     }
@@ -140,4 +145,3 @@ void *server(void *threadid)
 	     close(sockfd);
 	pthread_exit(NULL);
 }
-*/

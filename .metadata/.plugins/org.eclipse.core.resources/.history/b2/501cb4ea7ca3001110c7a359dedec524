@@ -1,4 +1,4 @@
-/*#include <iostream>
+#include <iostream>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <sys/time.h>
@@ -17,16 +17,21 @@
 #include <cstring>
 #include <pthread.h>
 #include "udpmessagesocket.h"
-#define SRV_IP "194.29.169.4"
+#define SRV_IP "127.0.0.1"
 #define BUFLEN 512
 #define NPACK 10
 #define PORT 8060
 using namespace std;
 
-void *server2(void *threadid);
+void *server(void *threadid);
 
+void diep(char *s)
+{
+  perror(s);
+  exit(1);
+}
 
-int main2() {
+int main() {
 
 			string msg = "INVITE sip:stud5@194.29.169.4 SIP/2.0";
 			msg+= "Via: SIP/2.0/UDP 194.29.169.4:8060;branch=z9hG4bK343bf628;rport";
@@ -88,7 +93,6 @@ int main2() {
 		     serv_addr.sin_port = htons(PORT);
 		     if (connect(sockfd,(struct sockaddr *) &serv_addr,sizeof(serv_addr)) < 0)
 		         printf("ERROR connecting");
-		     printf("Jest polaczenie!!!\n");
 		     //printf("Please enter the message: ");
 		     bzero(buffer,256);
 		     //fgets(buffer,255,stdin);
@@ -140,4 +144,3 @@ void *server(void *threadid)
 	     close(sockfd);
 	pthread_exit(NULL);
 }
-*/

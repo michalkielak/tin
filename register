@@ -1,0 +1,66 @@
+No.     Time        Source                Destination           Protocol Info
+     64 403.425083  10.0.2.15             194.29.169.4          SIP      Request: REGISTER sip:194.29.169.4:8060
+
+Frame 64: 611 bytes on wire (4888 bits), 611 bytes captured (4888 bits)
+Linux cooked capture
+Internet Protocol, Src: 10.0.2.15 (10.0.2.15), Dst: 194.29.169.4 (194.29.169.4)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00)
+    Total Length: 595
+    Identification: 0x0000 (0)
+    Flags: 0x02 (Don't Fragment)
+    Fragment offset: 0
+    Time to live: 64
+    Protocol: UDP (17)
+    Header checksum: 0xc169 [correct]
+    Source: 10.0.2.15 (10.0.2.15)
+    Destination: 194.29.169.4 (194.29.169.4)
+User Datagram Protocol, Src Port: 8060 (8060), Dst Port: 8060 (8060)
+    Source port: 8060 (8060)
+    Destination port: 8060 (8060)
+    Length: 575
+    Checksum: 0x7981 [validation disabled]
+        [Good Checksum: False]
+        [Bad Checksum: False]
+Session Initiation Protocol
+    Request-Line: REGISTER sip:194.29.169.4:8060 SIP/2.0
+        Method: REGISTER
+        Request-URI: sip:194.29.169.4:8060
+            Request-URI Host Part: 194.29.169.4
+            Request-URI Host Port: 8060
+        [Resent Packet: False]
+    Message Header
+        Via: SIP/2.0/UDP 10.0.2.15:8060;rport;branch=z9hG4bK1606792150
+            Transport: UDP
+            Sent-by Address: 10.0.2.15
+            Sent-by port: 8060
+            RPort: rport
+            Branch: z9hG4bK1606792150
+        From: <sip:stud5@194.29.169.4:8060>;tag=697264525
+            SIP from address: sip:stud5@194.29.169.4:8060
+                SIP from address User Part: stud5
+                SIP from address Host Part: 194.29.169.4
+                SIP from address Host Port: 8060
+            SIP tag: 697264525
+        To: <sip:stud5@194.29.169.4:8060>
+            SIP to address: sip:stud5@194.29.169.4:8060
+                SIP to address User Part: stud5
+                SIP to address Host Part: 194.29.169.4
+                SIP to address Host Port: 8060
+        Call-ID: 2082372650
+        CSeq: 2 REGISTER
+        Contact: <sip:stud5@10.0.2.15:8060>
+            Contact-URI: sip:stud5@10.0.2.15:8060
+        Authorization: Digest username="stud5", realm="tele.pw.edu.pl", nonce="809efae20abc344f92013866e39d4e4736417119", uri="sip:194.29.169.4:8060", response="11de87eb98123dfd2ae9ed3182c2cb2f", algorithm=MD5
+            Authentication Scheme: Digest
+            username="stud5"
+            realm="tele.pw.edu.pl"
+            nonce="809efae20abc344f92013866e39d4e4736417119"
+            uri="sip:194.29.169.4:8060"
+            response="11de87eb98123dfd2ae9ed3182c2cb2f"
+            algorithm=MD5
+        Max-Forwards: 70
+        User-Agent: Linphone/3.3.2 (eXosip2/3.3.0)
+        Expires: 3600
+        Content-Length: 0

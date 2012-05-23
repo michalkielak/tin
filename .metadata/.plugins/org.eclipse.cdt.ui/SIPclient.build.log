@@ -1,0 +1,25 @@
+
+**** Build of configuration Debug for project SIPclient ****
+
+**** Internal Builder is used for build               ****
+****  WARNING: The "Debug" Configuration may not build  ****
+****  because it uses the "MinGW GCC"  ****
+****  tool-chain that is unsupported on this system.  ****
+
+****  Attempting to build...  **** 
+
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -o main2.o ../main2.cpp
+../main2.cpp: In function ‘int main()’:
+../main2.cpp:121:27: warning: deprecated conversion from string constant to ‘char*’
+../main2.cpp:128:36: warning: deprecated conversion from string constant to ‘char*’
+../main2.cpp:140:31: warning: deprecated conversion from string constant to ‘char*’
+../main2.cpp:144:42: warning: deprecated conversion from string constant to ‘char*’
+../main2.cpp:107:14: warning: unused variable ‘thread’
+../main2.cpp:108:8: warning: unused variable ‘rc’
+../main2.cpp: In function ‘void* server(void*)’:
+../main2.cpp:161:25: warning: deprecated conversion from string constant to ‘char*’
+../main2.cpp:168:25: warning: deprecated conversion from string constant to ‘char*’
+../main2.cpp:172:31: warning: deprecated conversion from string constant to ‘char*’
+g++ -o SIPclient udpmessagesocket.o messagesocket.o main2.o main.o -lpthread
+Build complete for project SIPclient
+Time consumed: 8088  ms.  

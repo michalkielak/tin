@@ -1,0 +1,35 @@
+#include <cstring>
+
+msg3 = 		"Via: SIP/2.0/UDP 10.0.2.15:8060;rport;branch=z9hG4bK1606792150";
+msg3+=		"Transport: UDP";
+msg3+=		"Sent-by Address: 10.0.2.15";
+msg3+=		"Sent-by port: 8060";
+msg3+=		"RPort: rport";
+msg3+=		"Branch: z9hG4bK1606792150";
+msg3+=		"From: <sip:stud5@194.29.169.4:8060>;tag=697264525";
+msg3+=		"SIP from address: sip:stud5@194.29.169.4:8060";
+msg3+=		"SIP from address User Part: stud5";
+msg3+=		"SIP from address Host Part: 194.29.169.4";
+msg3+=		"SIP from address Host Port: 8060";
+msg3+=		"SIP tag: 697264525";
+msg3+=		"To: <sip:stud5@194.29.169.4:8060>";
+msg3+=		"SIP to address: sip:stud5@194.29.169.4:8060";
+msg3+=		"SIP to address User Part: stud5
+msg3+=		"SIP to address Host Part: 194.29.169.4
+msg3+=		"SIP to address Host Port: 8060
+msg3+=		"Call-ID: 2082372650
+msg3+=		"CSeq: 2 REGISTER
+msg3+=		"Contact: <sip:stud5@10.0.2.15:8060>
+msg3+=		"Contact-URI: sip:stud5@10.0.2.15:8060
+msg3+=		"Authorization: Digest username="stud5", realm="tele.pw.edu.pl", nonce="809efae20abc344f92013866e39d4e4736417119", uri="sip:194.29.169.4:8060", response="11de87eb98123dfd2ae9ed3182c2cb2f", algorithm=MD5
+msg3+=		"Authentication Scheme: Digest
+msg3+=		"username="stud5"
+msg3+=		"realm="tele.pw.edu.pl"
+msg3+=		"nonce="809efae20abc344f92013866e39d4e4736417119"
+msg3+=		"uri="sip:194.29.169.4:8060"
+msg3+=		"response="11de87eb98123dfd2ae9ed3182c2cb2f"
+msg3+=		"algorithm=MD5
+msg3+=		"Max-Forwards: 70
+msg3+=		"User-Agent: Linphone/3.3.2 (eXosip2/3.3.0)
+msg3+=		"Expires: 3600
+msg3+=		"Content-Length: 0

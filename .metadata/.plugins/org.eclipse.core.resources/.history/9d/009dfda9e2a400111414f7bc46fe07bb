@@ -1,0 +1,170 @@
+#include <iostream>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <sys/time.h>
+#include <sys/socket.h>
+#include <sys/ioctl.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <netdb.h>
+#include <arpa/nameser.h>
+#include <resolv.h>
+#include <fcntl.h>
+#include <errno.h>
+#include <unistd.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <cstring>
+#include <pthread.h>
+#include <arpa/inet.h>
+#include <netinet/in.h>
+#include <stdio.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <unistd.h>
+#include "udpmessagesocket.h"
+#include "messages.h"
+#define SRV_IP "194.29.169.4"
+#define BUFLEN 512
+#define NPACK 10
+#define PORT 8060
+using namespace std;
+
+void *server(void *threadid);
+
+void diep(char *s)
+{
+  perror(s);
+  exit(1);
+}
+
+int main() {
+
+			string msg = "INVITE sip:stud5@194.29.169.4 SIP/2.0\r\n";
+			msg+= "Via: SIP/2.0/UDP 194.29.169.4:8060;branch=z9hG4bK343bf628;rport\r\n";
+			msg+= "From: Test15 <sip:15@10.10.1.99>tag=as58f4201b\r\n";
+			msg+= "To: <sip:stud5@194.29.169.4>\r\n";
+			msg+= "Contact: <sip:stud6@194.29.169.4>\r\n";
+			msg+= "Call-ID: 326371826c80e17e6cf6c29861eb2933@194.29.169.4\r\n";
+			msg+= "CSeq: 102 INVITE\r\n";
+			msg+= "User-Agent: Asterisk PBX\r\n";
+			msg+= "Max-Forwards: 70\r\n";
+			msg+= "Date: Wed, 06 Dec 2009 14:12:45 GMT\r\n";
+			msg+= "Allow: INVITE, ACK, CANCEL, OPTIONS, BYE, REFER, SUBSCRIBE, NOTIFY\r\n";
+			msg+= "Supported: replaces\r\n";
+			msg+= "Content-Type: application/sdp\r\n";
+			msg+= "Content-Length: 258\r\n";
+			msg+= " \r\n";
+			msg+= "v=0\r\n";
+			msg+= "o=root 1821 1821 IN IP4 194.29.169.4\r\n";
+			msg+= "s=session\r\n";
+			msg+= "c=IN IP4 194.29.169.4\r\n";
+			msg+= "t=0 0\r\n";
+			msg+= "m=audio 11424 RTP/AVP 0 8 101\r\n";
+			msg+= "a=rtpmap:0 PCMU/8000\r\n";
+			msg+= "a=rtpmap:8 PCMA/8000\r\n";
+			msg+= "a=rtpmap:101 telephone-event/8000\r\n";
+			msg+= "a=fmtp:101 0-16\r\n";
+			msg+= "a=silenceSupp:off - - - -\r\n";
+			msg+= "a=ptime:20\r\n";
+			msg+= "a=sendrecv\r\n";
+
+			string msg2 = "......../'.Z.....E..S..@.@..i.........|.|.?y.REGISTER sip:194.29.169.4:8060 SIP/2.0..Via: SIP/2.0/UDP 10.0.2.15:8060;rport;branch=z9hG4bK1606792150..From: <sip:stud5@194.29.169.4:8060>;tag=697264525..To: <sip:stud5@194.29.169.4:8060>..Call-ID: 2082372650..CSeq: 2 REGISTER..Contact: <sip:stud5@10.0.2.15:8060>..Authorization: Digest username=\"stud5\", realm=\"tele.pw.edu.pl\", nonce=\"809efae20abc344f92013866e39d4e4736417119\", uri=\"sip:194.29.169.4:8060\", response=\"11de87eb98123dfd2ae9ed3182c2cb2f\", algorithm=MD5..Max-Forwards: 70..User-Agent: Linphone/3.3.2 (eXosip2/3.3.0)..Expires: 3600..Content-Length: 0.... ";
+			string msg3 = "Via: SIP/2.0/UDP 10.0.2.15:8060;rport;branch=z9hG4bK1606792150\r\n";
+			msg3+="Transport: UDP\r\n";
+			msg3+="Sent-by Address: 10.0.2.15\r\n";
+			msg3+="Sent-by port: 8060\r\n";
+			msg3+="RPort: rport\r\n";
+			msg3+="Branch: z9hG4bK1606792150\r\n";
+			msg3+="From: <sip:stud5@194.29.169.4:8060>;tag=697264525\r\n";
+			msg3+="SIP from address: sip:stud5@194.29.169.4:8060\r\n";
+			msg3+="SIP from address User Part: stud5\r\n";
+			msg3+="SIP from address Host Part: 194.29.169.4\r\n";
+			msg3+="SIP from address Host Port: 8060\r\n";
+			msg3+="SIP tag: 697264525\r\n";
+			msg3+="To: <sip:stud5@194.29.169.4:8060>\r\n";
+			msg3+="SIP to address: sip:stud5@194.29.169.4:8060\r\n";
+			msg3+="SIP to address User Part: stud5\r\n";
+			msg3+="SIP to address Host Part: 194.29.169.4\r\n";
+			msg3+="SIP to address Host Port: 8060\r\n";
+			msg3+="Call-ID: 2082372650\r\n";
+			msg3+="CSeq: 2 REGISTER\r\n";
+			msg3+="Contact: <sip:stud5@10.0.2.15:8060>\r\n";
+			msg3+="Contact-URI: sip:stud5@10.0.2.15:8060\r\n";
+			msg3+="Authorization: Digest username=\"stud5\", realm=\"tele.pw.edu.pl\", nonce=\"809efae20abc344f92013866e39d4e4736417119\", uri=\"sip:194.29.169.4:8060\", response=\"11de87eb98123dfd2ae9ed3182c2cb2f\", algorithm=MD5\r\n";
+			msg3+="Authentication Scheme: Digest\r\n";
+			msg3+="username=\"stud5\"\r\n";
+			msg3+="realm=\"tele.pw.edu.pl\"\r\n";
+			msg3+="nonce=\"809efae20abc344f92013866e39d4e4736417119\"\r\n";
+			msg3+="uri=\"sip:194.29.169.4:8060\"\r\n";
+			msg3+="response=\"11de87eb98123dfd2ae9ed3182c2cb2f\"\r\n";
+			msg3+="algorithm=MD5\r\n";
+			msg3+="Max-Forwards: 70\r\n";
+			msg3+="User-Agent: Linphone/3.3.2 (eXosip2/3.3.0)\r\n";
+			msg3+="Expires: 3600\r\n";
+			msg3+="Content-Length: 0\r\n";
+			pthread_t thread;
+			int rc;
+			int i=0;
+			rc=  pthread_create(&thread, NULL,server, (void*)i);
+		  if (rc){
+			 cout << "Error:unable to create thread," << rc << endl;
+			 exit(-1);
+		  }
+		  sleep(1);
+		      struct sockaddr_in si_other;
+		         int s, slen=sizeof(si_other);
+		         char buf[BUFLEN];
+
+		         if ((s=socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP))==-1)
+		           diep("socket");
+		         msg=msg3;
+		         memset((char *) &si_other, 0, sizeof(si_other));
+		         si_other.sin_family = AF_INET;
+		         si_other.sin_port = htons(PORT);
+		         if (inet_aton(SRV_IP, &si_other.sin_addr)==0) {
+		           fprintf(stderr, "inet_aton() failed\n");
+		           exit(1);
+		         }
+		         int send_size=0;
+		         for (i=0; i<NPACK; i++) {
+		           printf("Sending packet %d\n", i);
+		           //sprintf(buf, "This is packet %d\n", i);
+		           send_size=sendto(s, msg.c_str(), msg.length(), 0, (struct sockaddr*)&si_other, slen);
+		           cout<<send_size<<endl;
+		           if (send_size==-1)
+		             diep("sendto()");
+		         }
+
+		         close(s);
+
+		    sleep(5);
+			return 0;
+}
+
+void *server(void *threadid)
+{
+	struct sockaddr_in si_me, si_other;
+	        int s, i, slen=sizeof(si_other);
+	        char buf[BUFLEN];
+
+	        if ((s=socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP))==-1)
+	          diep("socket");
+
+	        memset((char *) &si_me, 0, sizeof(si_me));
+	        si_me.sin_family = AF_INET;
+	        si_me.sin_port = htons(PORT);
+	        si_me.sin_addr.s_addr = htonl(INADDR_ANY);
+	        if (bind(s, (struct sockaddr*)&si_me, sizeof(si_me))==-1)
+	            diep("bind");
+
+	        for (i=0; i<NPACK; i++) {
+	          if (recvfrom(s, buf, BUFLEN, 0, (struct sockaddr*)&si_other, (unsigned int*)&slen)==-1)
+	            diep("recvfrom()");
+	          printf("Received packet from %s:%d\nData: %s\n\n",
+	                 inet_ntoa(si_other.sin_addr), ntohs(si_other.sin_port), buf);
+	        }
+
+	        close(s);
+	pthread_exit(NULL);
+}
