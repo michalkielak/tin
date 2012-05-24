@@ -1,4 +1,3 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Rename resource &apos;SIPclient/messages.cpp&apos; to &apos;messages.h&apos;" description="Rename resource &apos;messages.cpp&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="messages.cpp" name="messages.h" stamp="1337781507153" updateReferences="true"/>
+<session version="1.0">&#x0A;<refactoring comment="Rename resource &apos;SIPclient/messages.cpp&apos; to &apos;messages.h&apos;" description="Rename resource &apos;messages.cpp&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="messages.cpp" name="messages.h" stamp="1337781507153" updateReferences="true"/>&#x0A;<refactoring comment="Rename resource &apos;SIPclient/messages.h&apos; to &apos;messages.cpp&apos;" description="Rename resource &apos;messages.h&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="messages.h" name="messages.cpp" stamp="1337875708458" updateReferences="true"/>
 </session>
