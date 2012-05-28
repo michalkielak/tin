@@ -7,7 +7,7 @@ public:
 string registerMsg;
 string registerAuthMsg;
 string msg3, msg2;
-string invite;
+string invite, invite2;
 
 void init()
 {
@@ -106,6 +106,39 @@ msg2+="Max-Forwards: 70\r\n";
 	invite+= "Contact: <sip:user1@pc33.server1.com>\r\n";
 	invite+= "Content-Type: application/sdp\r\n";
 	invite+= "Content-Length: 0\r\n";
+
+	invite2 = "E@@9hoINVITE sip:guest-187@127.0.0.1 SIP/2.0\r\n";
+	invite2+="Via: SIP/2.0/UDP 10.0.2.15:5060;rport;branch=z9hG4bK1146215919\r\n";
+	invite2+="From: <sip:michal@10.0.2.15>;tag=877947723\r\n";
+	invite2+="To: <sip:guest-187@127.0.0.1>\r\n";
+	invite2+="Call-ID: 140398538\r\n";
+	invite2+="CSeq: 20 INVITE\r\n";
+	invite2+="Contact: <sip:michal@127.0.0.1>\r\n";
+	invite2+="Content-Type: application/sdp\r\n";
+	invite2+="Allow: INVITE, ACK, CANCEL, OPTIONS, BYE, REFER, NOTIFY, MESSAGE, SUBSCRIBE, INFO\r\n";
+	invite2+="Max-Forwards: 70\r\n";
+	invite2+="User-Agent: Linphone/3.3.2 (eXosip2/3.3.0)\r\n";
+	invite2+="Subject: Phone call\r\n";
+	invite2+="Content-Length:   400\r\n";
+	invite2+=" \r\n";
+	invite2+="v=0\r\n";
+	invite2+="o=michal 123456 654321 IN IP4 10.0.2.15\r\n";
+	invite2+="s=A conversation\r\n";
+	invite2+="c=IN IP4 10.0.2.15\r\n";
+	invite2+="t=0 0\r\n";
+	invite2+="m=audio 7078 RTP/AVP 112 111 110 3 0 8 101\r\n";
+	invite2+="a=rtpmap:112 speex/32000/1\r\n";
+	invite2+="a=fmtp:112 vbr=on\r\n";
+	invite2+="a=rtpmap:111 speex/16000/1\r\n";
+	invite2+="a=fmtp:111 vbr=on\r\n";
+	invite2+="a=rtpmap:110 speex/8000/1\r\n";
+	invite2+="a=fmtp:110 vbr=on\r\n";
+	invite2+="a=rtpmap:3 GSM/8000/1\r\n";
+	invite2+="a=rtpmap:0 PCMU/8000/1\r\n";
+	invite2+="a=rtpmap:8 PCMA/8000/1\r\n";
+	invite2+="a=rtpmap:101 telephone-event/8000/1\r\n";
+	invite2+="a=fmtp:101 0-11\r\n";
+
 }
 
 string getRegisterMsg()
@@ -149,7 +182,8 @@ string getRegisterAuthMsg(string nonce)
 
 string getInviteMsg()
 {
-	return invite;
+	//return invite;
+	return invite2;
 }
 
 };
