@@ -24,10 +24,10 @@
 #include <unistd.h>
 #include "udpmessagesocket.h"
 #include "messages.cpp"
-#define SRV_IP "194.29.169.4"
+#define SRV_IP "192.168.47.146"
 #define BUFLEN 512
 #define NPACK 10
-#define PORT 8060
+#define PORT 5060
 using namespace std;
 
 void *server(void *threadid);
@@ -66,7 +66,7 @@ int main() {
 	}
 
 	 int send_size=0;
-	   printf("Sending REGISTER message\n");
+	   /*printf("Sending REGISTER message\n");
 	   send_size=sendto(s, registerMsg.c_str(), registerMsg.length(), 0, (struct sockaddr*)&si_other, slen);
 	   cout<<"Send "<<send_size<<" bytes"<<endl;
 	   if (send_size==-1)
@@ -98,7 +98,13 @@ int main() {
 		printf("Received packet from %s:%d\nData: %s\n\n",
 		inet_ntoa(si_other.sin_addr), ntohs(si_other.sin_port), buf);}
 
-	 //sleep(5);
+	 //sleep(5);*/
+	 string inviteMsg = message->getInviteMsg();
+	 send_size=sendto(s, inviteMsg.c_str(), inviteMsg.length(), 0, (struct sockaddr*)&si_other, slen);
+		   cout<<"Send "<<send_size<<" bytes"<<endl;
+		   if (send_size==-1)
+			 diep("sendto()");
+
 	 close(s);
 
 

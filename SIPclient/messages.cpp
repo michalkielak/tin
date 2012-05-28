@@ -7,6 +7,7 @@ public:
 string registerMsg;
 string registerAuthMsg;
 string msg3, msg2;
+string invite;
 
 void init()
 {
@@ -96,7 +97,15 @@ msg2+="Expires: 3600\r\n";
 msg2+="Content-Length: 0\r\n";
 msg2+="Max-Forwards: 70\r\n";
 
-
+	invite = "INVITE sip:toto@192.168.47.146 SIP/2.0\r\n";
+	invite+= "Via: SIP/2.0/UDP pc33.server1.com;branch=z9hG4bK776asdhds Max-Forwards: 70\r\n";
+	invite+= "To: toto <sip:toto@192.168.47.146>\r\n";
+	invite+= "From: user1 <sip:user1@server1.com>;tag=1928301774\r\n";
+	invite+= "Call-ID: a84b4c76e66710@pc33.server1.com\r\n";
+	invite+= "CSeq: 314159 INVITE\r\n";
+	invite+= "Contact: <sip:user1@pc33.server1.com>\r\n";
+	invite+= "Content-Type: application/sdp\r\n";
+	invite+= "Content-Length: 0\r\n";
 }
 
 string getRegisterMsg()
@@ -136,6 +145,11 @@ string getRegisterAuthMsg(string nonce)
 
 	return registerAuthMsg;
 	//return msg3;
+}
+
+string getInviteMsg()
+{
+	return invite;
 }
 
 };
