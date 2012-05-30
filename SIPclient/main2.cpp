@@ -26,7 +26,7 @@
 #include "parser.cpp"
 #include "md5.h"
 #include "messages.cpp"
-#include "2client.cpp"
+//#include "2client.cpp"
 //#define SRV_IP otherIp.c_str()
 #define SRV_IP "194.29.169.4"
 #define BUFLEN 10240
@@ -34,7 +34,9 @@
 #define PORT 8060
 using namespace std;
 
-
+void * ReceiveHandler( void * ld);
+void error(const char *);
+int rtp_session(int argc,const char *argv[]);
 void diep(const char* s)
 {
   perror(s);
@@ -226,8 +228,13 @@ int main(int argc, char* argv[]) {
 		
 	}
 	
+ 	const char * tab[3];
+ 	tab[0] = argv[0];
+ 	tab[1] = otherIp.c_str();
+	tab[2] = string("7078").c_str();
 
-	sleep(10);
+	rtp_session(3,tab);
+	//sleep(10);
  	
 	string byeMsg = message->getByeMsg(string(toTag));
 	send_size=sendto(s, byeMsg.c_str(), byeMsg.length(), 0, (struct sockaddr*)&si_other, slen);
