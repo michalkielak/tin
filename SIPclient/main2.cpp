@@ -65,15 +65,13 @@ int main(int argc, char* argv[]) {
 		in >> myIp;
 		in >> otherLogin;
 		in >> otherIp;
+		serverIp = "194.29.169.4";
 	}
 	
 	cout << myLogin << "@" << myIp <<" " << otherLogin << "@" << otherIp <<endl;
-	
-	
-	
-	
-	
-	Messages *message = new Messages(myLogin, myIp, otherLogin, otherIp);
+	cout << serverIp << endl;
+
+	Messages *message = new Messages(myLogin, myIp, otherLogin, otherIp, serverIp);
 	message->init();
 	struct sockaddr_in si_other;
 	int s, slen=sizeof(si_other);
@@ -123,7 +121,19 @@ int main(int argc, char* argv[]) {
 	char *r;
 	string nonce = getNonce(buf,strlen(buf),&r);
 	string realm = r;
-	cout << nonce << endl; //<< realm << endl;
+	cout << nonce << " " <<realm << endl;
+	//string nonce;
+	
+	/*md5_t m;
+	md5_init(&m);
+*/
+
+	string test = string(nonce + realm);
+	char result[64];
+	md5_buffer(test.c_str(),test.length(),(void*)result);
+	cout << result << endl;
+
+
 
 return 0;
 

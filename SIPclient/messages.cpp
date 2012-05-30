@@ -14,7 +14,7 @@ string ok;
 string myIp, otherIp, serverIp, myLogin, otherLogin;
 string contentSize;
 
-Messages(string myLogin, string myIp, string otherLogin, string otherIp, string serverIp="")
+Messages(string myLogin, string myIp, string otherLogin, string otherIp, string serverIp)
 {
 	this->myIp = myIp;
 	this->otherIp = otherIp;

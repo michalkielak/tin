@@ -66,7 +66,7 @@ int getOptions(char *msg, size_t len, char **via, char** from, char ** to, char 
 	return 0;
 }
 
-char* getNonce(char* msg, size_t len, char** realm ) {
+char* getNonce(char* msg, size_t len, char **realm) {
 	parser_init();
 	osip_message_t *message;
 	osip_message_init(&message);
@@ -79,10 +79,10 @@ char* getNonce(char* msg, size_t len, char** realm ) {
 	
 	
 	osip_www_authenticate_t *www_auth;
-	if (osip_message_get_www_authenticate(message, 0, &www_auth) == 0) {
+	if (osip_message_get_www_authenticate(message, 0, &www_auth) == 0)
+	{
 		nonce = osip_strdup(osip_www_authenticate_get_nonce(www_auth));
-	
-		*realm = osip_strdup(osip_www_authenticate_get_realm(www_auth)); 
+		*realm = osip_strdup(www_auth->realm);
 	}
 	osip_message_free(message);
 	
