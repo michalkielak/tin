@@ -24,6 +24,7 @@
 #include <sys/socket.h>
 #include <unistd.h>
 #include "parser.cpp"
+#include "md5.h"
 //#include "udpmessagesocket.h"
 #include "messages.cpp"
 #define SRV_IP otherIp.c_str()
@@ -33,7 +34,7 @@
 using namespace std;
 
 
-void diep(char *s)
+void diep(const char* s)
 {
   perror(s);
   exit(1);

@@ -3,7 +3,7 @@
 #include <osip2/osip.h>
 
 //wiadomosc z ghuba
-char* msg3 = "BYE sip:michal@192.168.46.88:8060 SIP/2.0\r\nVia: SIP/2.0/UDP 192.168.47.25:8060;rport;branch=z9hG4bK1394956433\r\nFrom: <sip:tin@192.168.47.25>;tag=1945341956\r\nTo: <sip:michal@192.168.46.88:8060>;tag=32391\r\nCall-ID: 1411118635\r\nCSeq: 21 BYE\r\nContact: <sip:tin@192.168.47.25:8060>\r\nMax-Forwards: 70\r\nUser-Agent: Linphone/3.3.2 (eXosip2/3.3.0)\r\nContent-Length: 0\r\n";
+const char* msg3 = "BYE sip:michal@192.168.46.88:8060 SIP/2.0\r\nVia: SIP/2.0/UDP 192.168.47.25:8060;rport;branch=z9hG4bK1394956433\r\nFrom: <sip:tin@192.168.47.25>;tag=1945341956\r\nTo: <sip:michal@192.168.46.88:8060>;tag=32391\r\nCall-ID: 1411118635\r\nCSeq: 21 BYE\r\nContact: <sip:tin@192.168.47.25:8060>\r\nMax-Forwards: 70\r\nUser-Agent: Linphone/3.3.2 (eXosip2/3.3.0)\r\nContent-Length: 0\r\n";
 
 /* argumenty:
 	msg - wiadomosc
