@@ -151,7 +151,6 @@ class Messages{
 		ok+="User-Agent: Linphone/3.3.2 (eXosip2/3.3.0)\r\n";
 		ok+="Content-Length: 0\r\n";
 		return ok;
-
 	}
 	
 };

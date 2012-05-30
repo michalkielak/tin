@@ -151,50 +151,41 @@ int main(int argc, char* argv[]) {
 	 
 	 registerMsg = message->getRegisterAuthMsg(nonce, response);
 	 cout<<registerMsg<<endl;
-		   send_size=sendto(s, registerMsg.c_str(), registerMsg.length(), 0, (struct sockaddr*)&si_other, slen);
-		   cout<<"Send "<<send_size<<" bytes"<<endl;
-		   if (send_size==-1)
-			 diep("sendto()");
+	send_size=sendto(s, registerMsg.c_str(), registerMsg.length(), 0, (struct sockaddr*)&si_other, slen);
+	cout<<"Send "<<send_size<<" bytes"<<endl;
+	if (send_size==-1)
+	{
+		diep("sendto()");
+	}
 
 
-		for(int j=0; j<1; j++)
-		{
-			if (recvfrom(s, buf, BUFLEN, 0, (struct sockaddr*)&si_other, (unsigned int*)&slen)==-1)
-			{
-				diep("recvfrom()");
-			}
-			printf("Received packet from %s:%d\nData: %s\n\n",
-			inet_ntoa(si_other.sin_addr), ntohs(si_other.sin_port), buf);
-		}
+		
+	if (recvfrom(s, buf, BUFLEN, 0, (struct sockaddr*)&si_other, (unsigned int*)&slen)==-1)
+	{
+		diep("recvfrom()");
+	}
+	printf("Received packet from %s:%d\nData: %s\n\n",
+	inet_ntoa(si_other.sin_addr), ntohs(si_other.sin_port), buf);
+		
 
 	
-	 
-	// otherIp = serverIp;
-	// myIp = serverIp;
-	
-	
-	
-	 
 	 string inviteMsg = message->getInviteMsg();
 	 send_size=sendto(s, inviteMsg.c_str(), inviteMsg.length(), 0, (struct sockaddr*)&si_other, slen);
 		   cout<<"Send "<<send_size<<" bytes"<<endl;
 		   if (send_size==-1)
+		   {
 			 diep("sendto()");
-
-		   //int code;
-		   //char *toTag, *via, *from, *to, *c_seq, *call_id;
-		   //char *parsedIp;
+		   }
 		   while(1){
-		   	 if (recvfrom(s, buf, BUFLEN, 0, (struct sockaddr*)&si_other, (unsigned int*)&slen)==-1)
-		   					diep("recvfrom()");
-		   	/*printf("Received packet from %s:%d\nData: %s\n\n",
-		   	inet_ntoa(si_other.sin_addr), ntohs(si_other.sin_port), buf);*/
+             if (recvfrom(s, buf, BUFLEN, 0, (struct sockaddr*)&si_other, (unsigned int*)&slen)==-1)
+			 {
+				diep("recvfrom()");
+			 }
+
 		   	parseMsg(buf, strlen(buf), &code, &parsedIp, &toTag);
 		   	cout<<"Received code "<<code<<endl;
 			if(code==200)
 		   		break;
-		   	/*else
-		   		;*/
 		   }
 
 
@@ -206,70 +197,64 @@ int main(int argc, char* argv[]) {
 
 
 
-			if (recvfrom(s, buf, BUFLEN, 0, (struct sockaddr*)&si_other, (unsigned int*)&slen)==-1)
-			{
-				diep("recvfrom()");
-			}
-		   	parseMsg(buf, strlen(buf), &code, &parsedIp, &toTag);
-		   	cout<<"Received code "<<code<<endl;
-		
-			sleep(2);
+	if (recvfrom(s, buf, BUFLEN, 0, (struct sockaddr*)&si_other, (unsigned int*)&slen)==-1)
+	{
+		diep("recvfrom()");
+	}
+	parseMsg(buf, strlen(buf), &code, &parsedIp, &toTag);
+	cout<<"Received code "<<code<<endl;
+
+	sleep(2);
 
 	if (recvfrom(s, buf, BUFLEN, 0, (struct sockaddr*)&si_other, (unsigned int*)&slen)==-1)
-		   					diep("recvfrom()");
-		   	/*printf("Received packet from %s:%d\nData: %s\n\n",
-		   	inet_ntoa(si_other.sin_addr), ntohs(si_other.sin_port), buf);*/
-		   	parseMsg(buf, strlen(buf), &code, &parsedIp, &toTag);
-		   	cout<<"Received code "<<code<<endl;
-	if (code == 0) {
+	{
+		diep("recvfrom()");
+							
+	}
+	parseMsg(buf, strlen(buf), &code, &parsedIp, &toTag);
+	cout<<"Received code "<<code<<endl;
+	if (code == 0) 
+	{
 		getOptions(buf, strlen(buf), &via, &from, &to, &call_id, &c_seq);
 		string okMsg = message->getOkMsg(string(via), string(from), string(to), string(call_id), string(c_seq));
 		send_size=sendto(s, okMsg.c_str(), okMsg.length(), 0, (struct sockaddr*)&si_other, slen);
 		cout<<"Send "<<send_size<<" bytes"<<endl;
 		if (send_size==-1)
+		{
 			diep("sendto()");
+		}
 		
 	}
 	
-	/*
-	const char* tab[3];
-	tab[0] = argv[0];
-	tab[1] = otherIp.c_str();
-	tab[2] = string("8060").c_str();
 
-	cout << "(-1)" <<endl;
-	for(int i=0; i<6; ++i)
-	{
-		rtp_session(3, tab);
-		cout << "(" << i <<")" <<endl;
-	}
-	cout << "(L)" <<endl;
-	*/
-	sleep(20);
+	sleep(10);
  	
 	string byeMsg = message->getByeMsg(string(toTag));
 	send_size=sendto(s, byeMsg.c_str(), byeMsg.length(), 0, (struct sockaddr*)&si_other, slen);
 	cout<<"Send "<<send_size<<" bytes"<<endl;
 	if (send_size==-1)
+	{
 		diep("sendto()");
+	}
 
-byeMsg = message->getByeMsg(string(to));
+	byeMsg = message->getByeMsg(string(to));
 	send_size=sendto(s, byeMsg.c_str(), byeMsg.length(), 0, (struct sockaddr*)&si_other, slen);
 	cout<<"Send "<<send_size<<" bytes"<<endl;
 	if (send_size==-1)
 		diep("sendto()");
 
 
-while(1){
-		   	 if (recvfrom(s, buf, BUFLEN, 0, (struct sockaddr*)&si_other, (unsigned int*)&slen)==-1)
-		   					diep("recvfrom()");
-		   	/*printf("Received packet from %s:%d\nData: %s\n\n",
-		   	inet_ntoa(si_other.sin_addr), ntohs(si_other.sin_port), buf);*/
-		   	parseMsg(buf, strlen(buf), &code, &parsedIp, &toTag);
-		   	cout<<"Received code "<<code<<endl;
-			if(code==200)
-		   		break;
-		   }
+	while(1)
+	{
+		 if (recvfrom(s, buf, BUFLEN, 0, (struct sockaddr*)&si_other, (unsigned int*)&slen)==-1)
+						diep("recvfrom()");
+		parseMsg(buf, strlen(buf), &code, &parsedIp, &toTag);
+		cout<<"Received code "<<code<<endl;
+		if(code==200)
+		{
+			break;
+		}
+	}
 
 
 
