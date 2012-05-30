@@ -43,6 +43,8 @@ void diep(char *s)
 int main() {
 
 	int i=0;
+	string myLogin, myIp, otherLogin, otherIp, serverIp;
+
 	Messages *message = new Messages();
 	message->init();
 	struct sockaddr_in si_other;

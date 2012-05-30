@@ -10,6 +10,16 @@ string msg3, msg2;
 string invite, invite2, invite3;
 string ack, bye;
 string ok;
+string myIp, otherIp, serverIp, myLogin, otherLogin;
+
+Messages(string myLogin, string myIp, string otherLogin, string otherIp, string serverIp="")
+{
+	this->myIp = myIp;
+	this->otherIp = otherIp;
+	this->serverIp = serverIp;
+	this->myLogin = myLogin;
+	this->otherLogin = otherLogin;
+}
 
 void init()
 {
@@ -73,18 +83,18 @@ void init()
 	registerAuthMsg+="username=\"stud5\"\r\n";
 	registerAuthMsg+="realm=\"tele.pw.edu.pl\"\r\n";*/
 
-msg3 = "REGISTER sip:194.29.169.4 SIP/2.0\r\n";
+/*msg3 = "REGISTER sip:194.29.169.4 SIP/2.0\r\n";
 msg3+="CSeq: 2 REGISTER\r\n";
 msg3+="Via: SIP/2.0/UDP 10.0.2.15:8060;branch=z9hG4bK32366531-99e1-de11-8845-080027608325;rport\r\n";
 msg3+="User-Agent: Ekiga/3.2.5\r\n";
-/*msg3+="From: <sip:stud5@194.29.169.4>;tag=d60e6131-99e1-de11-8845-080027608325\r\n";
+msg3+="From: <sip:stud5@194.29.169.4>;tag=d60e6131-99e1-de11-8845-080027608325\r\n";
 msg3+="Call-ID: e4ec6031-99e1-de11-8845-080027608325@vvt-laptop\r\n";
 msg3+="To: <sip:stud5@194.29.169.4>\r\n";
 msg3+="Contact: <sip:stud5@194.29.169.4>;q=1\r\n";
 msg3+="Allow: INVITE,ACK,OPTIONS,BYE,CANCEL,SUBSCRIBE,NOTIFY,REFER,MESSAGE,INFO,PING\r\n";
 msg3+="Expires: 3600\r\n";
 msg3+="Content-Length: 0\r\n";
-msg3+="Max-Forwards: 70\r\n";*/
+msg3+="Max-Forwards: 70\r\n";
 
 msg2 = "REGISTER sip:194.29.169.4 SIP/2.0\r\n";
 msg2+="CSeq: 1 REGISTER\r\n";
@@ -99,23 +109,23 @@ msg2+="Expires: 3600\r\n";
 msg2+="Content-Length: 0\r\n";
 msg2+="Max-Forwards: 70\r\n";
 
-	invite = "INVITE sip:michal@192.168.46.88 SIP/2.0\r\n";
-	invite+= "Via: SIP/2.0/UDP 192.168.47.25;branch=z9hG4bK776asdhds Max-Forwards: 70\r\n";
-	invite+= "To: michal <sip:michal@192.168.46.88>\r\n";
-	invite+= "From: user1 <sip:user1@192.168.47.25>;tag=1928301774\r\n";
+	invite = "INVITE sip:myLogin@"+otherIp+" SIP/2.0\r\n";
+	invite+= "Via: SIP/2.0/UDP "+myIp+";branch=z9hG4bK776asdhds Max-Forwards: 70\r\n";
+	invite+= "To: myLogin <sip:myLogin@"+otherIp+">\r\n";
+	invite+= "From: user1 <sip:user1@"+myIp+">;tag=1928301774\r\n";
 	invite+= "Call-ID: a84b4c76e66710@pc33.server1.com\r\n";
 	invite+= "CSeq: 314159 INVITE\r\n";
-	invite+= "Contact: <sip:user1@192.168.47.25>\r\n";
+	invite+= "Contact: <sip:user1@"+myIp+">\r\n";
 	invite+= "Content-Type: application/sdp\r\n";
 	invite+= "Content-Length: 0\r\n";
 
-	invite2 = "INVITE sip:michal@192.168.46.88 SIP/2.0\r\n";
-	invite2+="Via: SIP/2.0/UDP 192.168.47.25:8060;rport;branch=z9hG4bK1146215919\r\n";
-	invite2+="From: <sip:user1@192.168.47.25>;tag=877947723\r\n";
-	invite2+="To: <sip:michal@192.168.46.88>\r\n";
+	invite2 = "INVITE sip:myLogin@"+otherIp+" SIP/2.0\r\n";
+	invite2+="Via: SIP/2.0/UDP "+myIp+":8060;rport;branch=z9hG4bK1146215919\r\n";
+	invite2+="From: <sip:user1@"+myIp+">;tag=877947723\r\n";
+	invite2+="To: <sip:myLogin@"+otherIp+">\r\n";
 	invite2+="Call-ID: 140398538\r\n";
 	invite2+="CSeq: 20 INVITE\r\n";
-	invite2+="Contact: <sip:user1@192.168.47.25>\r\n";
+	invite2+="Contact: <sip:user1@"+myIp+">\r\n";
 	invite2+="Content-Type: application/sdp\r\n";
 	invite2+="Allow: INVITE, ACK, CANCEL, OPTIONS, BYE, REFER, NOTIFY, MESSAGE, SUBSCRIBE, INFO\r\n";
 	invite2+="Max-Forwards: 70\r\n";
@@ -124,7 +134,7 @@ msg2+="Max-Forwards: 70\r\n";
 	invite2+="Content-Length:   400\r\n";
 	invite2+=" \r\n";
 	invite2+="v=0\r\n";
-	invite2+="o=michal 123456 654321 IN IP4 10.0.2.15\r\n";
+	invite2+="o=myLogin 123456 654321 IN IP4 10.0.2.15\r\n";
 	invite2+="s=A conversation\r\n";
 	invite2+="c=IN IP4 10.0.2.15\r\n";
 	invite2+="t=0 0\r\n";
@@ -139,44 +149,8 @@ msg2+="Max-Forwards: 70\r\n";
 	invite2+="a=rtpmap:0 PCMU/8000/1\r\n";
 	invite2+="a=rtpmap:8 PCMA/8000/1\r\n";
 	invite2+="a=rtpmap:101 telephone-event/8000/1\r\n";
-	invite2+="a=fmtp:101 0-11\r\n";
+	invite2+="a=fmtp:101 0-11\r\n";*/
 
-
-	invite3 ="INVITE sip:michal@192.168.46.88:8060 SIP/2.0\r\n";
-	invite3+="Via: SIP/2.0/UDP 192.168.47.25:8060;rport;branch=z9hG4bK1858780968\r\n";//!
-	invite3+="From: <sip:tin@192.168.47.25:8060>;tag=1945341956\r\n";
-	invite3+="To: <sip:michal@192.168.46.88:8060>\r\n";
-	invite3+="Call-ID: 1411118635\r\n";
-	invite3+="CSeq: 20 INVITE\r\n";
-	invite3+="Contact: <sip:tin@192.168.47.25:8060>\r\n";//!
-	invite3+="Content-Type: application/sdp\r\n";
-	invite3+="Allow: INVITE, ACK, CANCEL, OPTIONS, BYE, REFER, NOTIFY, MESSAGE, SUBSCRIBE, INFO\r\n";
-	invite3+="Max-Forwards: 70\r\n";
-	invite3+="User-Agent: Linphone/3.3.2 (eXosip2/3.3.0)\r\n";
-	invite3+="Subject: Phone call\r\n";
-	invite3+="Content-Length:   405\r\n";
-	invite3+="\r\n";
-	invite3+="v=0\r\n";
-	invite3+="o=tin 123456 654321 IN IP4 192.168.47.25\r\n";//!
-	invite3+="s=A conversation\r\n";
-	invite3+="c=IN IP4 192.168.47.25\r\n";//!
-	invite3+="t=0 0\r\n";
-	invite3+="m=audio 7078 RTP/AVP 112 111 110 3 0 8 101\r\n";
-	invite3+="a=rtpmap:112 speex/32000/1\r\n";
-	invite3+="a=fmtp:112 vbr=on\r\n";
-	invite3+="a=rtpmap:111 speex/16000/1\r\n";
-	invite3+="a=fmtp:111 vbr=on\r\n";
-	invite3+="a=rtpmap:110 speex/8000/1\r\n";
-	invite3+="a=fmtp:110 vbr=on\r\n";
-	invite3+="a=rtpmap:3 GSM/8000/1\r\n";
-	invite3+="a=rtpmap:0 PCMU/8000/1\r\n";
-	invite3+="a=rtpmap:8 PCMA/8000/1\r\n";
-	invite3+="a=rtpmap:101 telephone-event/8000/1\r\n";
-	invite3+="a=fmtp:101 0-11\r\n";
-
-	
-
-	
 
 
 }
@@ -220,8 +194,40 @@ string getRegisterAuthMsg(string nonce)
 	//return msg3;
 }
 
-string getInviteMsg()
+string geotherLoginviteMsg()
 {
+	invite3 ="INVITE sip:myLogin@"+otherIp+":8060 SIP/2.0\r\n";
+	invite3+="Via: SIP/2.0/UDP "+myIp+":8060;rport;branch=z9hG4bK1858780968\r\n";//!
+	invite3+="From: <sip:otherLogin@"+myIp+":8060>;tag=1945341956\r\n";
+	invite3+="To: <sip:myLogin@"+otherIp+":8060>\r\n";
+	invite3+="Call-ID: 1411118635\r\n";
+	invite3+="CSeq: 20 INVITE\r\n";
+	invite3+="Contact: <sip:otherLogin@"+myIp+":8060>\r\n";//!
+	invite3+="Content-Type: application/sdp\r\n";
+	invite3+="Allow: INVITE, ACK, CANCEL, OPTIONS, BYE, REFER, NOTIFY, MESSAGE, SUBSCRIBE, INFO\r\n";
+	invite3+="Max-Forwards: 70\r\n";
+	invite3+="User-Agent: Linphone/3.3.2 (eXosip2/3.3.0)\r\n";
+	invite3+="Subject: Phone call\r\n";
+	invite3+="Content-Length:   405\r\n";
+	invite3+="\r\n";
+	invite3+="v=0\r\n";
+	invite3+="o=otherLogin 123456 654321 IN IP4 "+myIp+"\r\n";//!
+	invite3+="s=A conversation\r\n";
+	invite3+="c=IN IP4 "+myIp+"\r\n";//!
+	invite3+="t=0 0\r\n";
+	invite3+="m=audio 7078 RTP/AVP 112 111 110 3 0 8 101\r\n";
+	invite3+="a=rtpmap:112 speex/32000/1\r\n";
+	invite3+="a=fmtp:112 vbr=on\r\n";
+	invite3+="a=rtpmap:111 speex/16000/1\r\n";
+	invite3+="a=fmtp:111 vbr=on\r\n";
+	invite3+="a=rtpmap:110 speex/8000/1\r\n";
+	invite3+="a=fmtp:110 vbr=on\r\n";
+	invite3+="a=rtpmap:3 GSM/8000/1\r\n";
+	invite3+="a=rtpmap:0 PCMU/8000/1\r\n";
+	invite3+="a=rtpmap:8 PCMA/8000/1\r\n";
+	invite3+="a=rtpmap:101 telephone-event/8000/1\r\n";
+	invite3+="a=fmtp:101 0-11\r\n";
+
 	//return invite;
 	//return invite2;
 	return invite3;
@@ -229,13 +235,13 @@ string getInviteMsg()
 
 string getAckMsg(string toTag)
 {	
-	ack="ACK sip:michal@192.168.46.88:8060 SIP/2.0\r\n";
-	ack+="Via: SIP/2.0/UDP 192.168.47.25:8060;rport;branch=z9hG4bK1763228933\r\n";
-	ack+="From: <sip:tin@192.168.47.25>;tag=1945341956\r\n";
-	ack+="To: <sip:michal@192.168.46.88:8060>;tag="+toTag+"\r\n";
+	ack="ACK sip:myLogin@"+otherIp+":8060 SIP/2.0\r\n";
+	ack+="Via: SIP/2.0/UDP "+myIp+":8060;rport;branch=z9hG4bK1763228933\r\n";
+	ack+="From: <sip:otherLogin@"+myIp+">;tag=1945341956\r\n";
+	ack+="To: <sip:myLogin@"+otherIp+":8060>;tag="+toTag+"\r\n";
 	ack+="Call-ID: 1411118635\r\n";
 	ack+="CSeq: 20 ACK\r\n";
-	ack+="Contact: <sip:tin@192.168.47.25:8060>\r\n";
+	ack+="Contact: <sip:otherLogin@"+myIp+":8060>\r\n";
 	ack+="Max-Forwards: 70\r\n";
 	ack+="User-Agent: Linphone/3.3.2 (eXosip2/3.3.0)\r\n";
 	ack+="Content-Length: 0\r\n";
@@ -244,13 +250,13 @@ string getAckMsg(string toTag)
 
 string getByeMsg(string toTag)
 {
-	bye="BYE sip:michal@192.168.46.88:8060 SIP/2.0\r\n";
-	bye+="Via: SIP/2.0/UDP 192.168.47.25:8060;rport;branch=z9hG4bK1394956433\r\n";
-	bye+="From: <sip:tin@192.168.47.25>;tag=1945341956\r\n";
-	bye+="To: <sip:michal@192.168.46.88:8060>;tag="+toTag+"\r\n";
+	bye="BYE sip:myLogin@"+otherIp+":8060 SIP/2.0\r\n";
+	bye+="Via: SIP/2.0/UDP "+myIp+":8060;rport;branch=z9hG4bK1394956433\r\n";
+	bye+="From: <sip:otherLogin@"+myIp+">;tag=1945341956\r\n";
+	bye+="To: <sip:myLogin@"+otherIp+":8060>;tag="+toTag+"\r\n";
 	bye+="Call-ID: 1411118635\r\n";
 	bye+="CSeq: 21 BYE\r\n";
-	bye+="Contact: <sip:tin@192.168.47.25:8060>\r\n";
+	bye+="Contact: <sip:otherLogin@"+myIp+":8060>\r\n";
 	bye+="Max-Forwards: 70\r\n";
 	bye+="User-Agent: Linphone/3.3.2 (eXosip2/3.3.0)\r\n";
 	bye+="Content-Length: 0\r\n";
