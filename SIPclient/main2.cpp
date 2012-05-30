@@ -25,7 +25,6 @@
 #include <unistd.h>
 #include "parser.cpp"
 #include "md5.h"
-//#include "udpmessagesocket.h"
 #include "messages.cpp"
 #include "2client.cpp"
 //#define SRV_IP otherIp.c_str()
@@ -71,8 +70,8 @@ int main(int argc, char* argv[]) {
 	cout << myLogin << "@" << myIp <<" " << otherLogin << "@" << otherIp <<endl;
 	cout << serverIp << endl;
 
-	Messages *message = new Messages(myLogin, myIp, otherLogin, otherIp, serverIp);
-	message->init();
+	Messages *message = new Messages(myLogin, myIp, otherLogin, /*otherIp,*/ serverIp);
+	//message->init();
 	struct sockaddr_in si_other;
 	int s, slen=sizeof(si_other);
 	char buf[BUFLEN];
@@ -206,17 +205,15 @@ int main(int argc, char* argv[]) {
 		diep("sendto()");
 
 
-//while(1){
-		   	 if (recvfrom(s, buf, BUFLEN, 0, (struct sockaddr*)&si_other, (unsigned int*)&slen)==-1)
-		   					diep("recvfrom()");
-		   	/*printf("Received packet from %s:%d\nData: %s\n\n",
-		   	inet_ntoa(si_other.sin_addr), ntohs(si_other.sin_port), buf);*/
+
+			if (recvfrom(s, buf, BUFLEN, 0, (struct sockaddr*)&si_other, (unsigned int*)&slen)==-1)
+			{
+				diep("recvfrom()");
+			}
 		   	parseMsg(buf, strlen(buf), &code, &parsedIp, &toTag);
 		   	cout<<"Received code "<<code<<endl;
-			//if(code==200)
-		   		//break;
-		  // }
-sleep(2);
+		
+			sleep(2);
 
 	if (recvfrom(s, buf, BUFLEN, 0, (struct sockaddr*)&si_other, (unsigned int*)&slen)==-1)
 		   					diep("recvfrom()");
