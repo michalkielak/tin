@@ -27,7 +27,9 @@
 #include "md5.h"
 //#include "udpmessagesocket.h"
 #include "messages.cpp"
-#define SRV_IP otherIp.c_str()
+#include "2client.cpp"
+//#define SRV_IP otherIp.c_str()
+#define SRV_IP "194.29.169.4"
 #define BUFLEN 10240
 #define NPACK 10
 #define PORT 8060
@@ -44,6 +46,9 @@ int main(int argc, char* argv[]) {
 	
 	int i=0;
 	string myLogin, myIp, otherLogin, otherIp, serverIp;
+	int code;
+	char *toTag, *via, *from, *to, *c_seq, *call_id;
+	char *parsedIp;
 	
 	if (argc!=2)
 	{
@@ -63,6 +68,10 @@ int main(int argc, char* argv[]) {
 	}
 	
 	cout << myLogin << "@" << myIp <<" " << otherLogin << "@" << otherIp <<endl;
+	
+	
+	
+	
 	
 	Messages *message = new Messages(myLogin, myIp, otherLogin, otherIp);
 	message->init();
@@ -88,26 +97,41 @@ int main(int argc, char* argv[]) {
 		exit(1);
 	}
 
-	 int send_size=0;
-	   /*printf("Sending REGISTER message\n");
-	   send_size=sendto(s, registerMsg.c_str(), registerMsg.length(), 0, (struct sockaddr*)&si_other, slen);
-	   cout<<"Send "<<send_size<<" bytes"<<endl;
-	   if (send_size==-1)
-		 diep("sendto()");
 
-	 for(int j=0; j<2; j++){
-	 if (recvfrom(s, buf, BUFLEN, 0, (struct sockaddr*)&si_other, (unsigned int*)&slen)==-1)
-					diep("recvfrom()");
-	printf("Received packet from %s:%d\nData: %s\n\n",
-	inet_ntoa(si_other.sin_addr), ntohs(si_other.sin_port), buf);}
+/**********************stad robimy register******/
+	int send_size=0;
+	printf("Sending REGISTER message\n");
+	send_size=sendto(s, registerMsg.c_str(), registerMsg.length(), 0, (struct sockaddr*)&si_other, slen);
+	cout<<"Send "<<send_size<<" bytes"<<endl;
+	if (send_size==-1)
+	diep("sendto()");
 
+	
+	
+	do
+	{
+		if (recvfrom(s, buf, BUFLEN, 0, (struct sockaddr*)&si_other, (unsigned int*)&slen)==-1)
+		{
+			diep("recvfrom()");
+		}
+		printf("Received packet from %s:%d\nData: %s\n\n",
+		inet_ntoa(si_other.sin_addr), ntohs(si_other.sin_port), buf);
+		parseMsg(buf, strlen(buf), &code, &parsedIp, &toTag);
+	}
+	while(code!=401);
+	
+	char *r;
+	string nonce = getNonce(buf,strlen(buf),&r);
+	string realm = r;
+	cout << nonce << endl; //<< realm << endl;
 
+return 0;
 
 
 
 	 printf("Sending REGISTER message with authentication\n Enter nonce code\n");
-	 string nonce;
-	 cin>>nonce;
+	// string nonce;
+	// cin>>nonce;
 	 registerMsg = message->getRegisterAuthMsg(nonce);
 	 cout<<registerMsg<<endl;
 		   send_size=sendto(s, registerMsg.c_str(), registerMsg.length(), 0, (struct sockaddr*)&si_other, slen);
@@ -121,16 +145,21 @@ int main(int argc, char* argv[]) {
 		printf("Received packet from %s:%d\nData: %s\n\n",
 		inet_ntoa(si_other.sin_addr), ntohs(si_other.sin_port), buf);}
 
-	 //sleep(5);*/
+	 //sleep(5);
+	 
+	 
+	 return 0;
+	 
+	 
 	 string inviteMsg = message->getInviteMsg();
 	 send_size=sendto(s, inviteMsg.c_str(), inviteMsg.length(), 0, (struct sockaddr*)&si_other, slen);
 		   cout<<"Send "<<send_size<<" bytes"<<endl;
 		   if (send_size==-1)
 			 diep("sendto()");
 
-		   int code;
-		   char *toTag, *via, *from, *to, *c_seq, *call_id;
-		   char *parsedIp;
+		   //int code;
+		   //char *toTag, *via, *from, *to, *c_seq, *call_id;
+		   //char *parsedIp;
 		   while(1){
 		   	 if (recvfrom(s, buf, BUFLEN, 0, (struct sockaddr*)&si_other, (unsigned int*)&slen)==-1)
 		   					diep("recvfrom()");
@@ -180,10 +209,23 @@ sleep(2);
 		
 	}
 	
+	/*
+	const char* tab[3];
+	tab[0] = argv[0];
+	tab[1] = otherIp.c_str();
+	tab[2] = string("8060").c_str();
 
-
-sleep(20);
- 	string byeMsg = message->getByeMsg(string(toTag));
+	cout << "(-1)" <<endl;
+	for(int i=0; i<6; ++i)
+	{
+		rtp_session(3, tab);
+		cout << "(" << i <<")" <<endl;
+	}
+	cout << "(L)" <<endl;
+	*/
+	//sleep(20);
+ 	
+	string byeMsg = message->getByeMsg(string(toTag));
 	send_size=sendto(s, byeMsg.c_str(), byeMsg.length(), 0, (struct sockaddr*)&si_other, slen);
 	cout<<"Send "<<send_size<<" bytes"<<endl;
 	if (send_size==-1)

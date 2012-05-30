@@ -65,6 +65,30 @@ int getOptions(char *msg, size_t len, char **via, char** from, char ** to, char 
 
 	return 0;
 }
+
+char* getNonce(char* msg, size_t len, char** realm ) {
+	parser_init();
+	osip_message_t *message;
+	osip_message_init(&message);
+	osip_message_parse(message, msg, len);
+	
+	char *nonce = NULL;
+	osip_proxy_authenticate_t * proxy_auth;
+	if (osip_message_get_proxy_authenticate(message, 0, &proxy_auth) == 0 ) 
+		nonce = osip_strdup(osip_proxy_authenticate_get_nonce(proxy_auth));
+	
+	
+	osip_www_authenticate_t *www_auth;
+	if (osip_message_get_www_authenticate(message, 0, &www_auth) == 0) {
+		nonce = osip_strdup(osip_www_authenticate_get_nonce(www_auth));
+	
+		*realm = osip_strdup(osip_www_authenticate_get_realm(www_auth)); 
+	}
+	osip_message_free(message);
+	
+	return nonce;
+}
+
 /*
 int main (void) {
 	size_t length = strlen(msg3);
@@ -74,8 +98,8 @@ int main (void) {
 	//parseMsg(msg3, length, &status, &contact_ip, &tag1);
 
 	//printf("%s, %d, %s\n", contact_ip, status, tag1);	
-	getOptions(msg3, length, &via, &from, &to, &call_id, &c_seq);
-	printf("%s\n%s\n%s\n%s\n%s\n", via, from, to, call_id, c_seq);
+	//getOptions(msg3, length, &via, &from, &to, &call_id, &c_seq);
+	//printf("%s\n%s\n%s\n%s\n%s\n", via, from, to, call_id, c_seq);
 		
 	return 0;
 }*/
