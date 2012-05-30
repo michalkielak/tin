@@ -104,8 +104,6 @@ int main(int argc, char* argv[]) {
 	if (send_size==-1)
 	diep("sendto()");
 
-	
-	
 	do
 	{
 		if (recvfrom(s, buf, BUFLEN, 0, (struct sockaddr*)&si_other, (unsigned int*)&slen)==-1)
@@ -121,45 +119,62 @@ int main(int argc, char* argv[]) {
 	char *r;
 	string nonce = getNonce(buf,strlen(buf),&r);
 	string realm = r;
-	cout << nonce << " " <<realm << endl;
-	//string nonce;
 	
-	/*md5_t m;
-	md5_init(&m);
-*/
+	nonce.erase(nonce.begin());
+	nonce.erase(--nonce.end());
+	realm.erase(realm.begin());
+	realm.erase(--realm.end());
+	
+	cout << nonce << " " <<realm << endl;
+// realm="tele.pw.edu.pl"; nonce="a6d9f03e06c0d14955071d3f0bb1ee923e728657";
+ 
+	string s1 = string(myLogin + ":" + realm + ":" + myLogin);
+	string s2 = string(string("REGISTER:sip:") + serverIp);
+	char b1[16];
+	char b2[16];
+	char ha1[33];
+	char ha2[33];
+	md5_buffer(s1.c_str(),s1.length(),(void*)b1);
+	md5_buffer(s2.c_str(),s2.length(),(void*)b2);
+	md5_sig_to_string((void*)b1, ha1, 33);
+	md5_sig_to_string((void*)b2, ha2, 33);
+	
+	char b3[16];
+	string s3 = string(string(ha1) + ":" + nonce + ":" + string(ha2));
+	md5_buffer(s3.c_str(),s3.length(),(void*)b3);
+	
+	char response[33];
+	md5_sig_to_string((void*)b3, response, 33);
 
-	string test = string(nonce + realm);
-	char result[64];
-	md5_buffer(test.c_str(),test.length(),(void*)result);
-	cout << result << endl;
 
 
-
-return 0;
-
-
-
-	 printf("Sending REGISTER message with authentication\n Enter nonce code\n");
-	// string nonce;
-	// cin>>nonce;
-	 registerMsg = message->getRegisterAuthMsg(nonce);
+	 printf("Sending REGISTER message with authentication\n");
+	 
+	 registerMsg = message->getRegisterAuthMsg(nonce, response);
 	 cout<<registerMsg<<endl;
 		   send_size=sendto(s, registerMsg.c_str(), registerMsg.length(), 0, (struct sockaddr*)&si_other, slen);
 		   cout<<"Send "<<send_size<<" bytes"<<endl;
 		   if (send_size==-1)
 			 diep("sendto()");
 
-		 for(int j=0; j<2; j++){
-		 if (recvfrom(s, buf, BUFLEN, 0, (struct sockaddr*)&si_other, (unsigned int*)&slen)==-1)
-						diep("recvfrom()");
-		printf("Received packet from %s:%d\nData: %s\n\n",
-		inet_ntoa(si_other.sin_addr), ntohs(si_other.sin_port), buf);}
 
-	 //sleep(5);
+		for(int j=0; j<1; j++)
+		{
+			if (recvfrom(s, buf, BUFLEN, 0, (struct sockaddr*)&si_other, (unsigned int*)&slen)==-1)
+			{
+				diep("recvfrom()");
+			}
+			printf("Received packet from %s:%d\nData: %s\n\n",
+			inet_ntoa(si_other.sin_addr), ntohs(si_other.sin_port), buf);
+		}
+
+	
 	 
-	 
-	 return 0;
-	 
+	// otherIp = serverIp;
+	// myIp = serverIp;
+	
+	
+	
 	 
 	 string inviteMsg = message->getInviteMsg();
 	 send_size=sendto(s, inviteMsg.c_str(), inviteMsg.length(), 0, (struct sockaddr*)&si_other, slen);
@@ -233,7 +248,7 @@ sleep(2);
 	}
 	cout << "(L)" <<endl;
 	*/
-	//sleep(20);
+	sleep(20);
  	
 	string byeMsg = message->getByeMsg(string(toTag));
 	send_size=sendto(s, byeMsg.c_str(), byeMsg.length(), 0, (struct sockaddr*)&si_other, slen);
