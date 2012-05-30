@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <sys/time.h>
@@ -25,14 +26,12 @@
 #include "parser.cpp"
 //#include "udpmessagesocket.h"
 #include "messages.cpp"
-#define SRV_IP "192.168.46.88"
+#define SRV_IP otherIp.c_str()
 #define BUFLEN 10240
 #define NPACK 10
 #define PORT 8060
 using namespace std;
 
-
-void *server(void *threadid);
 
 void diep(char *s)
 {
@@ -40,12 +39,31 @@ void diep(char *s)
   exit(1);
 }
 
-int main() {
-
+int main(int argc, char* argv[]) {
+	
 	int i=0;
 	string myLogin, myIp, otherLogin, otherIp, serverIp;
-
-	Messages *message = new Messages();
+	
+	if (argc!=2)
+	{
+		diep("nie poprawna nazwa pliku");
+	}
+	//osobny zakres do obslugi pliku
+	{
+		ifstream in(argv[1]);
+		if(!in)
+		{
+			diep("nie poprawna nazwa pliku");
+		}
+		in >> myLogin;
+		in >> myIp;
+		in >> otherLogin;
+		in >> otherIp;
+	}
+	
+	cout << myLogin << "@" << myIp <<" " << otherLogin << "@" << otherIp <<endl;
+	
+	Messages *message = new Messages(myLogin, myIp, otherLogin, otherIp);
 	message->init();
 	struct sockaddr_in si_other;
 	int s, slen=sizeof(si_other);

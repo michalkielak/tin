@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cstring>
+#include <sstream>
 using namespace std;
 
 class Messages{
@@ -11,6 +12,7 @@ string invite, invite2, invite3;
 string ack, bye;
 string ok;
 string myIp, otherIp, serverIp, myLogin, otherLogin;
+string contentSize;
 
 Messages(string myLogin, string myIp, string otherLogin, string otherIp, string serverIp="")
 {
@@ -19,6 +21,12 @@ Messages(string myLogin, string myIp, string otherLogin, string otherIp, string 
 	this->serverIp = serverIp;
 	this->myLogin = myLogin;
 	this->otherLogin = otherLogin;
+	//wyliczamy contentSize
+	int cs = 376;
+	cs+= 2*myIp.size() + myLogin.size();
+	ostringstream oss;
+	oss << cs;
+	contentSize = oss.str();
 }
 
 void init()
@@ -109,9 +117,9 @@ msg2+="Expires: 3600\r\n";
 msg2+="Content-Length: 0\r\n";
 msg2+="Max-Forwards: 70\r\n";
 
-	invite = "INVITE sip:myLogin@"+otherIp+" SIP/2.0\r\n";
+	invite = "INVITE sip:"+myLogin+"@"+otherIp+" SIP/2.0\r\n";
 	invite+= "Via: SIP/2.0/UDP "+myIp+";branch=z9hG4bK776asdhds Max-Forwards: 70\r\n";
-	invite+= "To: myLogin <sip:myLogin@"+otherIp+">\r\n";
+	invite+= "To: "+myLogin+" <sip:myLogin@"+otherIp+">\r\n";
 	invite+= "From: user1 <sip:user1@"+myIp+">;tag=1928301774\r\n";
 	invite+= "Call-ID: a84b4c76e66710@pc33.server1.com\r\n";
 	invite+= "CSeq: 314159 INVITE\r\n";
@@ -194,24 +202,24 @@ string getRegisterAuthMsg(string nonce)
 	//return msg3;
 }
 
-string geotherLoginviteMsg()
+string getInviteMsg()
 {
-	invite3 ="INVITE sip:myLogin@"+otherIp+":8060 SIP/2.0\r\n";
+	invite3 ="INVITE sip:"+otherLogin+"@"+otherIp+":8060 SIP/2.0\r\n";
 	invite3+="Via: SIP/2.0/UDP "+myIp+":8060;rport;branch=z9hG4bK1858780968\r\n";//!
-	invite3+="From: <sip:otherLogin@"+myIp+":8060>;tag=1945341956\r\n";
-	invite3+="To: <sip:myLogin@"+otherIp+":8060>\r\n";
+	invite3+="From: <sip:"+myLogin+"@"+myIp+":8060>;tag=1945341956\r\n";
+	invite3+="To: <sip:"+otherLogin+"@"+otherIp+":8060>\r\n";
 	invite3+="Call-ID: 1411118635\r\n";
 	invite3+="CSeq: 20 INVITE\r\n";
-	invite3+="Contact: <sip:otherLogin@"+myIp+":8060>\r\n";//!
+	invite3+="Contact: <sip:"+myLogin+"@"+myIp+":8060>\r\n";//!
 	invite3+="Content-Type: application/sdp\r\n";
 	invite3+="Allow: INVITE, ACK, CANCEL, OPTIONS, BYE, REFER, NOTIFY, MESSAGE, SUBSCRIBE, INFO\r\n";
 	invite3+="Max-Forwards: 70\r\n";
 	invite3+="User-Agent: Linphone/3.3.2 (eXosip2/3.3.0)\r\n";
 	invite3+="Subject: Phone call\r\n";
-	invite3+="Content-Length:   405\r\n";
+	invite3+="Content-Length:   "+ contentSize +"\r\n";//from 405+4
 	invite3+="\r\n";
 	invite3+="v=0\r\n";
-	invite3+="o=otherLogin 123456 654321 IN IP4 "+myIp+"\r\n";//!
+	invite3+="o="+myLogin+" 123456 654321 IN IP4 "+myIp+"\r\n";//!
 	invite3+="s=A conversation\r\n";
 	invite3+="c=IN IP4 "+myIp+"\r\n";//!
 	invite3+="t=0 0\r\n";
@@ -235,13 +243,13 @@ string geotherLoginviteMsg()
 
 string getAckMsg(string toTag)
 {	
-	ack="ACK sip:myLogin@"+otherIp+":8060 SIP/2.0\r\n";
+	ack="ACK sip:"+myLogin+"@"+otherIp+":8060 SIP/2.0\r\n";
 	ack+="Via: SIP/2.0/UDP "+myIp+":8060;rport;branch=z9hG4bK1763228933\r\n";
-	ack+="From: <sip:otherLogin@"+myIp+">;tag=1945341956\r\n";
-	ack+="To: <sip:myLogin@"+otherIp+":8060>;tag="+toTag+"\r\n";
+	ack+="From: <sip:"+otherLogin+"@"+myIp+">;tag=1945341956\r\n";
+	ack+="To: <sip:"+myLogin+"@"+otherIp+":8060>;tag="+toTag+"\r\n";
 	ack+="Call-ID: 1411118635\r\n";
 	ack+="CSeq: 20 ACK\r\n";
-	ack+="Contact: <sip:otherLogin@"+myIp+":8060>\r\n";
+	ack+="Contact: <sip:"+otherLogin+"@"+myIp+":8060>\r\n";
 	ack+="Max-Forwards: 70\r\n";
 	ack+="User-Agent: Linphone/3.3.2 (eXosip2/3.3.0)\r\n";
 	ack+="Content-Length: 0\r\n";
@@ -250,13 +258,13 @@ string getAckMsg(string toTag)
 
 string getByeMsg(string toTag)
 {
-	bye="BYE sip:myLogin@"+otherIp+":8060 SIP/2.0\r\n";
+	bye="BYE sip:"+myLogin+"@"+otherIp+":8060 SIP/2.0\r\n";
 	bye+="Via: SIP/2.0/UDP "+myIp+":8060;rport;branch=z9hG4bK1394956433\r\n";
-	bye+="From: <sip:otherLogin@"+myIp+">;tag=1945341956\r\n";
-	bye+="To: <sip:myLogin@"+otherIp+":8060>;tag="+toTag+"\r\n";
+	bye+="From: <sip:"+otherLogin+"@"+myIp+">;tag=1945341956\r\n";
+	bye+="To: <sip:"+myLogin+"@"+otherIp+":8060>;tag="+toTag+"\r\n";
 	bye+="Call-ID: 1411118635\r\n";
 	bye+="CSeq: 21 BYE\r\n";
-	bye+="Contact: <sip:otherLogin@"+myIp+":8060>\r\n";
+	bye+="Contact: <sip:"+otherLogin+"@"+myIp+":8060>\r\n";
 	bye+="Max-Forwards: 70\r\n";
 	bye+="User-Agent: Linphone/3.3.2 (eXosip2/3.3.0)\r\n";
 	bye+="Content-Length: 0\r\n";
@@ -278,5 +286,5 @@ string getOkMsg(string via, string from, string to, string call_id, string c_seq
 	return ok;
 
 }
-
+	
 };
