@@ -26,17 +26,14 @@
 #include "parser.h"
 #include "md5.h"
 #include "messages.h"
-//#include "2client.cpp"
-//#define SRV_IP otherIp.c_str()
-#define SRV_IP "194.29.169.4"
+#include "rtpclient.h"
+#define SRV_IP serverIp.c_str()
 #define BUFLEN 10240
 #define NPACK 10
 #define PORT 8060
 using namespace std;
 
-void * ReceiveHandler( void * ld);
-void error(const char *);
-int rtp_session(int argc,const char *argv[]);
+
 void diep(const char* s)
 {
   perror(s);
@@ -122,7 +119,6 @@ int main(int argc, char* argv[]) {
 	realm.erase(--realm.end());
 	
 	cout << nonce << " " <<realm << endl;
-// realm="tele.pw.edu.pl"; nonce="a6d9f03e06c0d14955071d3f0bb1ee923e728657";
  
 	string s1 = string(myLogin + ":" + realm + ":" + myLogin);
 	string s2 = string(string("REGISTER:sip:") + serverIp);
@@ -235,6 +231,8 @@ int main(int argc, char* argv[]) {
 	rtp_session(3,tab);
 	//sleep(10);
  	
+	cout <<"Duoa-" << endl;
+	
 	string byeMsg = message->getByeMsg(string(toTag));
 	send_size=sendto(s, byeMsg.c_str(), byeMsg.length(), 0, (struct sockaddr*)&si_other, slen);
 	cout<<"Send "<<send_size<<" bytes"<<endl;
