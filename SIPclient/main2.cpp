@@ -63,16 +63,11 @@ int main(int argc, char* argv[]) {
 			diep("nie poprawna nazwa pliku");
 		}
 		in >> myLogin;
-		in >> myIp;
 		in >> otherLogin;
-		in >> otherIp;
-		serverIp = "194.29.169.4";
+		in >> serverIp;
 	}
-	
-	cout << myLogin << "@" << myIp <<" " << otherLogin << "@" << otherIp <<endl;
-	cout << serverIp << endl;
 
-	Messages *message = new Messages(myLogin, myIp, otherLogin, /*otherIp,*/ serverIp);
+	Messages *message = new Messages(myLogin, otherLogin, serverIp);
 	//message->init();
 	struct sockaddr_in si_other;
 	int s, slen=sizeof(si_other);
@@ -189,7 +184,7 @@ int main(int argc, char* argv[]) {
 			if(code==200)
 		   		break;
 		   }
-
+	
 
  	string ackMsg = message->getAckMsg(string(toTag));
 	send_size=sendto(s, ackMsg.c_str(), ackMsg.length(), 0, (struct sockaddr*)&si_other, slen);
@@ -205,6 +200,10 @@ int main(int argc, char* argv[]) {
 	}
 	parseMsg(buf, strlen(buf), &code, &parsedIp, &toTag);
 	cout<<"Received code "<<code<<endl;
+
+
+		getIp(buf, strlen(buf), &to);
+		otherIp = to;
 
 	sleep(2);
 

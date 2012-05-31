@@ -1,10 +1,16 @@
 #include <iostream>
 #include <cstring>
 #include <sstream>
+#include <stdio.h>      
+#include <sys/types.h>
+#include <ifaddrs.h>
+#include <netinet/in.h> 
+#include <cstring> 
+#include <arpa/inet.h>
+#include <string>
 using namespace std;
 
 class Messages{
-	public:
 	string registerMsg;
 	string registerAuthMsg;
 	string msg3, msg2;
@@ -14,9 +20,32 @@ class Messages{
 	string myIp, /*otherIp,*/ serverIp, myLogin, otherLogin;
 	string contentSize;
 
-	Messages(string myLogin, string myIp, string otherLogin, /*string otherIp,*/ string serverIp)
+	string getMyIp () 
 	{
-		this->myIp = myIp;
+		char addressBuffer[INET_ADDRSTRLEN];
+		struct ifaddrs * ifAddrStruct=NULL;
+		struct ifaddrs * ifa=NULL;
+		void * tmpAddrPtr=NULL;
+
+		getifaddrs(&ifAddrStruct);
+		for (ifa = ifAddrStruct; ifa != NULL; ifa = ifa->ifa_next) {
+			if (ifa ->ifa_addr->sa_family==AF_INET) {
+				tmpAddrPtr=&((struct sockaddr_in *)ifa->ifa_addr)->sin_addr;
+				
+				inet_ntop(AF_INET, tmpAddrPtr, addressBuffer, INET_ADDRSTRLEN);
+			if (string(addressBuffer)!="127.0.0.1")
+			{
+						break;
+			}
+			}
+		}
+		if (ifAddrStruct!=NULL) freeifaddrs(ifAddrStruct);
+		return string(addressBuffer);
+	}
+public:
+	Messages(string myLogin, string otherLogin, /*string otherIp,*/ string serverIp)
+	{
+		this->myIp = getMyIp();
 	//	this->otherIp = otherIp;
 		this->serverIp = serverIp;
 		this->myLogin = myLogin;
@@ -152,5 +181,4 @@ class Messages{
 		ok+="Content-Length: 0\r\n";
 		return ok;
 	}
-	
 };
