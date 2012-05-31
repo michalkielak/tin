@@ -43,7 +43,7 @@ void diep(const char* s)
 int main(int argc, char* argv[]) {
 	
 	int i=0;
-	string myLogin, myIp, otherLogin, otherIp, serverIp;
+	string myLogin, password, myIp, otherLogin, otherIp, serverIp;
 	int code;
 	char *toTag, *via, *from, *to, *c_seq, *call_id;
 	char *parsedIp;
@@ -60,6 +60,7 @@ int main(int argc, char* argv[]) {
 			diep("nie poprawna nazwa pliku");
 		}
 		in >> myLogin;
+		in >> password;
 		in >> otherLogin;
 		in >> serverIp;
 	}
@@ -118,7 +119,7 @@ int main(int argc, char* argv[]) {
 	nonce.erase(--nonce.end());
 	realm.erase(realm.begin());
 	realm.erase(--realm.end());
-	string s1 = string(myLogin + ":" + realm + ":" + myLogin);
+	string s1 = string(myLogin + ":" + realm + ":" + password);
 	string s2 = string(string("REGISTER:sip:") + serverIp);
 	char b1[16];
 	char b2[16];
@@ -194,11 +195,6 @@ int main(int argc, char* argv[]) {
 	otherIp = to;
 	cout <<"uztkownik zdalny( " << otherLogin << " ) ma IP: "<< otherIp << endl;
 
-	if (recvfrom(s, buf, BUFLEN, 0, (struct sockaddr*)&si_other, (unsigned int*)&slen)==-1)
-	{
-		diep("recvfrom()");
-							
-	}
 	parseMsg(buf, strlen(buf), &code, &parsedIp, &toTag);
 	cout << "otrzymano wiadomosc o kodzie: " << code << endl;
 	if (code == 0) 
