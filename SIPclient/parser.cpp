@@ -1,10 +1,4 @@
-#include <stdlib.h>
-#include <sys/time.h>
-#include <osip2/osip.h>
-
-//wiadomosc z ghuba
-const char* msg3 = "BYE sip:michal@192.168.46.88:8060 SIP/2.0\r\nVia: SIP/2.0/UDP 192.168.47.25:8060;rport;branch=z9hG4bK1394956433\r\nVia: SIP/2.0/UDP 192.168.47.20:8060;rport;branch=z9hG4bK1394956433\r\nFrom: <sip:tin@192.168.47.25>;tag=1945341956\r\nTo: <sip:michal@192.168.46.88:8060>;tag=32391\r\nCall-ID: 1411118635\r\nCSeq: 21 BYE\r\nContact: <sip:tin@192.168.47.25:8060>\r\nMax-Forwards: 70\r\nUser-Agent: Linphone/3.3.2 (eXosip2/3.3.0)\r\nContent-Length: 0\r\n";
-
+#include "parser.h"
 /* argumenty:
 	msg - wiadomosc
 	len - dlugosc wiadomosci
@@ -31,8 +25,6 @@ int parseMsg(char *msg, size_t len, int *code, char **contact_ip, char **tag) {
 		osip_to_get_tag(to, &toTag);
 		*tag = osip_strdup(toTag->gvalue);
 	}
-	
-	//printf("(L)%s\n",*tag);
 	return 0;
 
 }
@@ -103,19 +95,3 @@ char* getNonce(char* msg, size_t len, char **realm) {
 	
 	return nonce;
 }
-
-/*
-int main (void) {
-	size_t length = strlen(msg3);
-	int status = 0;
-	char *contact_ip = NULL;
-	char *via, *from, *to, *call_id, *c_seq;
-	//parseMsg(msg3, length, &status, &contact_ip, &tag1);
-
-	//printf("%s, %d, %s\n", contact_ip, status, tag1);	
-	//getOptions(msg3, length, &via, &from, &to, &call_id, &c_seq);
-	getIp(msg3, strlen(msg3), &to);
-	printf("%s\n", to);
-		
-	return 0;
-}*/

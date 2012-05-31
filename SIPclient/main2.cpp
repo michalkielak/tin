@@ -23,9 +23,9 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <unistd.h>
-#include "parser.cpp"
+#include "parser.h"
 #include "md5.h"
-#include "messages.cpp"
+#include "messages.h"
 //#include "2client.cpp"
 //#define SRV_IP otherIp.c_str()
 #define SRV_IP "194.29.169.4"
