@@ -63,9 +63,10 @@ int main(int argc, char* argv[]) {
 		in >> otherLogin;
 		in >> serverIp;
 	}
-
+	
+	//cout << polaczenie 
+	
 	Messages *message = new Messages(myLogin, otherLogin, serverIp);
-	//message->init();
 	struct sockaddr_in si_other;
 	int s, slen=sizeof(si_other);
 	char buf[BUFLEN];
@@ -88,12 +89,12 @@ int main(int argc, char* argv[]) {
 		exit(1);
 	}
 
+	cout << "nawiazano polaczenie z serwerem" << endl;
+	cout << "wysylanie wiadomosci REGISTER" << endl;
 
-/**********************stad robimy register******/
 	int send_size=0;
-	printf("Sending REGISTER message\n");
 	send_size=sendto(s, registerMsg.c_str(), registerMsg.length(), 0, (struct sockaddr*)&si_other, slen);
-	cout<<"Send "<<send_size<<" bytes"<<endl;
+	cout<<"Wyslano "<<send_size<<" bajtow"<<endl;
 	if (send_size==-1)
 	diep("sendto()");
 
@@ -103,9 +104,9 @@ int main(int argc, char* argv[]) {
 		{
 			diep("recvfrom()");
 		}
-		printf("Received packet from %s:%d\nData: %s\n\n",
-		inet_ntoa(si_other.sin_addr), ntohs(si_other.sin_port), buf);
 		parseMsg(buf, strlen(buf), &code, &parsedIp, &toTag);
+		
+		cout << "otrzymano wiadomosc o kodzie: " << code << endl;
 	}
 	while(code!=401);
 	
@@ -117,9 +118,6 @@ int main(int argc, char* argv[]) {
 	nonce.erase(--nonce.end());
 	realm.erase(realm.begin());
 	realm.erase(--realm.end());
-	
-	cout << nonce << " " <<realm << endl;
- 
 	string s1 = string(myLogin + ":" + realm + ":" + myLogin);
 	string s2 = string(string("REGISTER:sip:") + serverIp);
 	char b1[16];
@@ -137,71 +135,64 @@ int main(int argc, char* argv[]) {
 	
 	char response[33];
 	md5_sig_to_string((void*)b3, response, 33);
-
-
-
-	 printf("Sending REGISTER message with authentication\n");
+	
+	 cout << "wysylanie wiadomosci REGISTER z autoryzacja" << endl;
 	 
 	 registerMsg = message->getRegisterAuthMsg(nonce, response);
-	 cout<<registerMsg<<endl;
 	send_size=sendto(s, registerMsg.c_str(), registerMsg.length(), 0, (struct sockaddr*)&si_other, slen);
-	cout<<"Send "<<send_size<<" bytes"<<endl;
 	if (send_size==-1)
 	{
 		diep("sendto()");
 	}
-
+	cout<<"Wyslano "<<send_size<<" bajtow"<<endl;
 
 		
 	if (recvfrom(s, buf, BUFLEN, 0, (struct sockaddr*)&si_other, (unsigned int*)&slen)==-1)
 	{
 		diep("recvfrom()");
 	}
-	printf("Received packet from %s:%d\nData: %s\n\n",
-	inet_ntoa(si_other.sin_addr), ntohs(si_other.sin_port), buf);
-		
 
-	
+	parseMsg(buf, strlen(buf), &code, &parsedIp, &toTag);
+	cout << "otrzymano wiadomosc o kodzie: " << code << endl;
+		
+	cout << "Wysylanie wiadomosci INVITE" << endl;
 	 string inviteMsg = message->getInviteMsg();
 	 send_size=sendto(s, inviteMsg.c_str(), inviteMsg.length(), 0, (struct sockaddr*)&si_other, slen);
-		   cout<<"Send "<<send_size<<" bytes"<<endl;
-		   if (send_size==-1)
-		   {
-			 diep("sendto()");
-		   }
-		   while(1){
-             if (recvfrom(s, buf, BUFLEN, 0, (struct sockaddr*)&si_other, (unsigned int*)&slen)==-1)
-			 {
-				diep("recvfrom()");
-			 }
+	cout<<"Wyslano "<<send_size<<" bajtow"<<endl;
+	if (send_size==-1)
+	{
+	 diep("sendto()");
+	}
+	while(1){
+	 if (recvfrom(s, buf, BUFLEN, 0, (struct sockaddr*)&si_other, (unsigned int*)&slen)==-1)
+	 {
+		diep("recvfrom()");
+	 }
 
-		   	parseMsg(buf, strlen(buf), &code, &parsedIp, &toTag);
-		   	cout<<"Received code "<<code<<endl;
-			if(code==200)
-		   		break;
-		   }
+	parseMsg(buf, strlen(buf), &code, &parsedIp, &toTag);
+	cout << "otrzymano wiadomosc o kodzie: " << code << endl;
+	if(code==200)
+		break;
+	}
 	
-
+	cout << "Wysylanie wiadomosci ACK" << endl;
  	string ackMsg = message->getAckMsg(string(toTag));
 	send_size=sendto(s, ackMsg.c_str(), ackMsg.length(), 0, (struct sockaddr*)&si_other, slen);
-	cout<<"Send "<<send_size<<" bytes"<<endl;
+	cout<<"Wyslano "<<send_size<<" bajtow"<<endl;
 	if (send_size==-1)
+	{
 		diep("sendto()");
-
-
-
+	}
 	if (recvfrom(s, buf, BUFLEN, 0, (struct sockaddr*)&si_other, (unsigned int*)&slen)==-1)
 	{
 		diep("recvfrom()");
 	}
 	parseMsg(buf, strlen(buf), &code, &parsedIp, &toTag);
-	cout<<"Received code "<<code<<endl;
+	cout << "otrzymano wiadomosc o kodzie: " << code << endl;
 
-
-		getIp(buf, strlen(buf), &to);
-		otherIp = to;
-
-	sleep(2);
+	getIp(buf, strlen(buf), &to);
+	otherIp = to;
+	cout <<"uztkownik zdalny( " << otherLogin << " ) ma IP: "<< otherIp << endl;
 
 	if (recvfrom(s, buf, BUFLEN, 0, (struct sockaddr*)&si_other, (unsigned int*)&slen)==-1)
 	{
@@ -209,88 +200,56 @@ int main(int argc, char* argv[]) {
 							
 	}
 	parseMsg(buf, strlen(buf), &code, &parsedIp, &toTag);
-	cout<<"Received code "<<code<<endl;
+	cout << "otrzymano wiadomosc o kodzie: " << code << endl;
 	if (code == 0) 
 	{
+		cout<<"Wysylanie wiadomosci OK" <<endl;
 		getOptions(buf, strlen(buf), &via, &from, &to, &call_id, &c_seq);
 		string okMsg = message->getOkMsg(string(via), string(from), string(to), string(call_id), string(c_seq));
 		send_size=sendto(s, okMsg.c_str(), okMsg.length(), 0, (struct sockaddr*)&si_other, slen);
-		cout<<"Send "<<send_size<<" bytes"<<endl;
+		cout<<"Wyslano "<<send_size<<" bajtow"<<endl;
 		if (send_size==-1)
 		{
 			diep("sendto()");
 		}
-		
 	}
 	
  	const char * tab[3];
  	tab[0] = argv[0];
  	tab[1] = otherIp.c_str();
 	tab[2] = string("7078").c_str();
-
+	cout<< "Rozpoczynam sesje RTP z uzytkownikiem: "+otherLogin + "@" + serverIp + " na hoscie: " + otherIp <<endl;  
 	rtp_session(3,tab);
-	//sleep(10);
- 	
-	cout <<"Duoa-" << endl;
+	cout << "Zakonczenie sesji RTP" <<endl;
 	
+	cout <<"Wysylanie wiadomosci BYE" << endl;
 	string byeMsg = message->getByeMsg(string(toTag));
 	send_size=sendto(s, byeMsg.c_str(), byeMsg.length(), 0, (struct sockaddr*)&si_other, slen);
-	cout<<"Send "<<send_size<<" bytes"<<endl;
+	cout<<"Wyslano "<<send_size<<" bajtow"<<endl;
 	if (send_size==-1)
 	{
 		diep("sendto()");
 	}
 
+	cout <<"Wysylanie wiadomosci BYE" << endl;
 	byeMsg = message->getByeMsg(string(to));
 	send_size=sendto(s, byeMsg.c_str(), byeMsg.length(), 0, (struct sockaddr*)&si_other, slen);
-	cout<<"Send "<<send_size<<" bytes"<<endl;
+	cout<<"Wyslano "<<send_size<<" bajtow"<<endl;
 	if (send_size==-1)
 		diep("sendto()");
-
 
 	while(1)
 	{
 		 if (recvfrom(s, buf, BUFLEN, 0, (struct sockaddr*)&si_other, (unsigned int*)&slen)==-1)
 						diep("recvfrom()");
 		parseMsg(buf, strlen(buf), &code, &parsedIp, &toTag);
-		cout<<"Received code "<<code<<endl;
+		cout << "otrzymano wiadomosc o kodzie: " << code << endl;
 		if(code==200)
 		{
 			break;
 		}
 	}
-
-
-
-	 close(s);
-
-
+	close(s);
+	cout<< "Zamknieto polaczenie z serwerem" << endl;
 	return 0;
-}
-
-void *server(void *threadid)
-{
-	struct sockaddr_in si_me, si_other;
-	        int s, i, slen=sizeof(si_other);
-	        char buf[BUFLEN];
-
-	        if ((s=socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP))==-1)
-	          diep("socket");
-
-	        memset((char *) &si_me, 0, sizeof(si_me));
-	        si_me.sin_family = AF_INET;
-	        si_me.sin_port = htons(PORT);
-	        si_me.sin_addr.s_addr = htonl(INADDR_ANY);
-	        if (bind(s, (struct sockaddr*)&si_me, sizeof(si_me))==-1)
-	            diep("bind");
-
-	        for (i=0; i<NPACK; i++) {
-	          if (recvfrom(s, buf, BUFLEN, 0, (struct sockaddr*)&si_other, (unsigned int*)&slen)==-1)
-	            diep("recvfrom()");
-	          printf("Received packet from %s:%d\nData: %s\n\n",
-	                 inet_ntoa(si_other.sin_addr), ntohs(si_other.sin_port), buf);
-	        }
-
-	        close(s);
-	pthread_exit(NULL);
 }

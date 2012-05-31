@@ -24,7 +24,7 @@ string Messages::getMyIp()
 	return string(addressBuffer);
 }
 
-Messages::Messages(string myLogin, string otherLogin, /*string otherIp,*/ string serverIp)
+Messages::Messages(string myLogin, string otherLogin,  string serverIp)
 {
 	this->myIp = getMyIp();
 //	this->otherIp = otherIp;
@@ -37,6 +37,10 @@ Messages::Messages(string myLogin, string otherLogin, /*string otherIp,*/ string
 	ostringstream oss;
 	oss << cs;
 	contentSize = oss.str();
+	
+	cout << "Uzytkownik " << myLogin << "@" << serverIp 
+		<< ":8060 na hoscie: " + myIp
+	<< " laczy sie z uzytkownikiem: " << otherLogin << "@" << serverIp << endl;
 }
 
 string Messages::getRegisterMsg()
