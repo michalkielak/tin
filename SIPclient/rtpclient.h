@@ -20,7 +20,7 @@
 
 void * ReceiveHandler( void * ld);
 void error(const char *);
-int rtp_session(int argc, const char *argv[]);
+int rtp_session(int argc, const char *argv[], const char * fileName);
 
 void diep(const char* s);
 

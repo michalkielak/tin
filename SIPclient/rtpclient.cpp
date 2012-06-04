@@ -3,7 +3,7 @@
 using namespace std;
 int odebrano = 0;
 
-int rtp_session(int argc, const char *argv[])
+int rtp_session(int argc, const char *argv[], const char *  fileName)
 {
   // FILE * file;
    ifstream myReadFile;
@@ -44,7 +44,7 @@ int rtp_session(int argc, const char *argv[])
    int i =1; // wartosc seq_nr
    int wyslano = 0; 
 
-   myReadFile.open("text.txt", ios::in | ios::binary);
+   myReadFile.open(fileName, ios::in | ios::binary);
    if(myReadFile.is_open()){
        while(!myReadFile.eof()) {
            bzero(buffer,sizeof(buffer));

@@ -43,7 +43,7 @@ void diep(const char* s)
 int main(int argc, char* argv[]) {
 	
 	int i=0;
-	string myLogin, password, myIp, otherLogin, otherIp, serverIp;
+	string myLogin, password, myIp, otherLogin, otherIp, serverIp,fileName;
 	int code;
 	char *toTag, *via, *from, *to, *c_seq, *call_id;
 	char *parsedIp;
@@ -63,6 +63,7 @@ int main(int argc, char* argv[]) {
 		in >> password;
 		in >> otherLogin;
 		in >> serverIp;
+		in >> fileName;
 	}
 	
 	//cout << polaczenie 
@@ -215,7 +216,7 @@ int main(int argc, char* argv[]) {
  	tab[1] = otherIp.c_str();
 	tab[2] = string("7078").c_str();
 	cout<< "Rozpoczynam sesje RTP z uzytkownikiem: "+otherLogin + "@" + serverIp + " na hoscie: " + otherIp <<endl;  
-	rtp_session(3,tab);
+	rtp_session(3,tab,fileName.c_str());
 	cout << "Zakonczenie sesji RTP" <<endl;
 	
 	cout <<"Wysylanie wiadomosci BYE" << endl;
