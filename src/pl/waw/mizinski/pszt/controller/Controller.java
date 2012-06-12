@@ -29,32 +29,6 @@ public class Controller
 	
 	private void fillEventActionMap()
 	{
-		eventActionMap.put(DominationUpdateEvent.class, new PsztAction()
-		{	
-			@Override
-			public void go(PsztEvent e)
-			{
-				DominationUpdateEvent event = (DominationUpdateEvent) e;
-				if (event.codomination == true)
-				{
-					model.setCodomination(true);
-				}
-				else
-				{
-					if (Model.checkDomX(event.domX) && Model.checkDomY(event.domY))
-					{	
-						model.setCodomination( false );
-						model.setDomX( event.domX );
-						model.setDomX( event.domY );
-					}
-					else
-					{
-						view.cantUpdate("Wartosci dominujace musza miescic sie w przedziale <-2,2>");
-					}
-				}
-			
-			}
-		});
 		
 		eventActionMap.put(MutationUpdateEvent.class, new PsztAction()
 		{	
@@ -63,14 +37,13 @@ public class Controller
 			{
 				MutationUpdateEvent event = (MutationUpdateEvent) e;
 
-				if (Model.checkMutationProbability(event.probability) && Model.checkMutationFactor(event.factor))
+				if (Model.checkMutationProbability(event.probability) )
 				{
 					model.setMutationProbability(event.probability);
-					model.setMutationFactor(event.factor);
 				}
 				else
 				{
-					view.cantUpdate("Podano nieprawidlowe wartosci");
+					view.cantUpdate("Prawdopodobienstwo musi nalezec do przedzialu <0,1>");
 				}
 			}
 			
@@ -88,7 +61,7 @@ public class Controller
 				}
 				else
 				{
-					view.cantUpdate("Licznosc populacji musi miescic sie w przedziale <100,20 000>");
+					view.cantUpdate("Licznosc populacji musi miescic sie w przedziale <10,20 000>");
 				}
 			
 			}

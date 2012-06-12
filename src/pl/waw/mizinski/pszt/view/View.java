@@ -3,7 +3,6 @@ package pl.waw.mizinski.pszt.view;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Enumeration;
 import java.util.concurrent.BlockingQueue;
 import javax.swing.*;
 import javax.swing.text.JTextComponent;
@@ -126,22 +125,12 @@ public class View
 			add(BorderLayout.SOUTH,panel);
 			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			setSize(640, 480);
-			setExtendedState(MAXIMIZED_BOTH);
+			//setExtendedState(MAXIMIZED_BOTH);
 			setVisible(true);
 		}
 		
 		
 		private JMenuBar makeMenu(){
-			JMenuItem domination = new JMenuItem("Dominacja");
-			domination.addActionListener(new ActionListener()
-			{
-				@Override
-				public void actionPerformed(ActionEvent e)
-				{
-					makeDominationDialog();
-				}
-
-			});
 			JMenuItem mutation = new JMenuItem("Mutacje");
 			mutation.addActionListener(new ActionListener()
 			{
@@ -163,7 +152,6 @@ public class View
 			});
 			
 			JMenu options = new JMenu("Opcje");
-			options.add(domination);
 			options.add(mutation);
 			options.add(size);
 			JMenuBar menu = new JMenuBar();
@@ -181,8 +169,6 @@ public class View
 			dialog.setLayout(new GridLayout(3,1));
 			dialog.add(size);
 			dialog.add(sizeGetter);
-			
-			
 			JButton ok = new JButton("OK");
 			ok.addActionListener(new ActionListener()
 			{
@@ -218,22 +204,11 @@ public class View
 		{
 			final JDialog dialog = new JDialog(PsztFrame.this, "Mutacje", true);
 			dialog.setSize(300,120);
-			final JLabel probability = new JLabel("Prawdopodobienstwo");
-			final JLabel factor = new JLabel("Wspolczynnik mutacji");
+			final JLabel probability = new JLabel("Prawdopodobienstwo mutacji");
 			final JTextComponent probabilityGetter = new JTextField();
-			final JTextComponent factorGetter = new JTextField();
 			dialog.setLayout(new GridLayout(3,1));
-			JPanel p1 = new JPanel();
-			p1.setLayout(new GridLayout(1,2));
-			p1.add(probability);
-			p1.add(probabilityGetter);
-			dialog.add(p1);
-			JPanel p2 = new JPanel();
-			p2.setLayout(new GridLayout(1,2));
-			p2.add(factor);
-			p2.add(factorGetter);
-			dialog.add(p2);
-			
+			dialog.add(probability);
+			dialog.add(probabilityGetter);
 			JButton ok = new JButton("OK");
 			ok.addActionListener(new ActionListener()
 			{
@@ -243,8 +218,7 @@ public class View
 					try
 					{
 						Double p = new Double(probabilityGetter.getText());
-						Double f = new Double(factorGetter.getText());
-						blockingQueue.put(new MutationUpdateEvent(p,f));
+						blockingQueue.put(new MutationUpdateEvent(p));
 					}
 					catch (NumberFormatException e)
 					{
@@ -265,107 +239,7 @@ public class View
 			dialog.setVisible(true);
 		}
 
-		private void makeDominationDialog()
-		{
-			final JDialog dialog = new JDialog(PsztFrame.this, "Dominacja", true);
-			dialog.setSize(260,120);
-			final JRadioButton domination = new JRadioButton("Pelna dominacja");
-			final JRadioButton codomination = new JRadioButton("Kodominacja");
-			final ButtonGroup bGroup = new ButtonGroup();
-			bGroup.add(domination);
-			bGroup.add(codomination);
-			
-			final JLabel x = new JLabel("X:");
-			final JLabel y = new JLabel("Y:");
-			final JTextComponent xGetter = new JTextField();
-			final JTextComponent yGetter = new JTextField();
-			
-			ActionListener enabler = new ActionListener()
-			{
-				@Override
-				public void actionPerformed(ActionEvent e)
-				{
-					x.setEnabled(true);
-					y.setEnabled(true);
-					xGetter.setEnabled(true);
-					yGetter.setEnabled(true);
-				}
-			};
-			ActionListener disabler = new ActionListener()
-			{
-				@Override
-				public void actionPerformed(ActionEvent e)
-				{
-					x.setEnabled(false);
-					y.setEnabled(false);
-					xGetter.setEnabled(false);
-					yGetter.setEnabled(false);
-				}
-			};
-			disabler.actionPerformed(null);
-			
-			codomination.addActionListener(disabler);
-			domination.addActionListener(enabler);
-			
-			dialog.setLayout(new GridLayout(3,1));
-			
-			JPanel p1 = new JPanel();
-			p1.setLayout(new GridLayout(1,2));
-			p1.add(codomination);
-			p1.add(domination);
-			dialog.add(p1);
-			
-			JPanel p2 = new JPanel();
-			p2.setLayout(new GridLayout(1,4));
-			p2.add(x);
-			p2.add(xGetter);
-			p2.add(y);
-			p2.add(yGetter);
-			dialog.add(p2);
-			
-			JButton ok = new JButton("OK");
-			ok.addActionListener(new ActionListener()
-			{
-				@Override
-				public void actionPerformed(ActionEvent arg0)
-				{
-					Enumeration<AbstractButton> en = bGroup.getElements();
-					if(en.hasMoreElements()){
-						try{
-							if (codomination.isSelected())
-							{
-								blockingQueue.put(new DominationUpdateEvent());
-							}
-							else if (domination.isSelected())
-							{
-								Double domX = new Double(xGetter.getText());
-								Double domY = new Double(yGetter.getText());
-								blockingQueue.put(new DominationUpdateEvent(domX, domY));
-							}
 
-						}
-						catch (NumberFormatException e)
-						{
-							cantUpdate(e.getMessage());
-						}
-						catch (Exception e)
-						{
-							e.printStackTrace();
-							throw new RuntimeException(e);
-						}
-						dialog.dispose();
-					}
-				
-				}
-			});
-			
-			JPanel okPanel = new JPanel();
-			okPanel.setLayout(new FlowLayout());
-			okPanel.add(ok);
-			dialog.add(okPanel);
-			dialog.setVisible(true);
-		}
-		
 		void write(String string){
 			tekstArea.append(string + '\n');
 		}
